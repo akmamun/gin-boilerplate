@@ -1,7 +1,6 @@
 package helpers
 
 import (
-	"fmt"
 	"os"
 )
 
@@ -15,14 +14,12 @@ import (
 // 	return value
 // }
 
-func GetEnv(key, fallback string) string {
+func GetEnv(key, defValue string) string {
 
 	value, ok := os.LookupEnv(key)
-	fmt.Println(value)
-	fmt.Println("exuts", ok)
 
 	if ok {
 		return value
 	}
-	return fallback
+	return defValue
 }
