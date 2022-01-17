@@ -1,28 +1,19 @@
 package helpers
 
 import (
-	"fmt"
+	"github.com/joho/godotenv"
+	"log"
 	"os"
 )
 
-// import "os"
-
-// func getEnv(key, fallback string) string {
-// 	value, exists := os.LookupEnv(key)
-// 	if !exists {
-// 		value = fallback
-// 	}
-// 	return value
-// }
-
-func GetEnv(key, fallback string) string {
-
-	value, ok := os.LookupEnv(key)
-	fmt.Println(value)
-	fmt.Println("exuts", ok)
-
-	if ok {
+func GetEnv(key string, defValue string) string {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("env not found %s", err)
+	}
+	value, exists := os.LookupEnv(key)
+	if exists {
 		return value
 	}
-	return fallback
+	return defValue
 }
