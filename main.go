@@ -17,28 +17,57 @@ type Datas struct {
 
 //var d *Data
 func testRR(w http.ResponseWriter, req *http.Request) {
-	userData := Datas{}
-	decoder := json.NewDecoder(req.Body)
-	decoder.DisallowUnknownFields()
-	err := decoder.Decode(&userData)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+	if req.Method == http.MethodPost {
+		userData := Datas{}
+		decoder := json.NewDecoder(req.Body)
+		decoder.DisallowUnknownFields()
+		err := decoder.Decode(&userData)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+
+		ctx := context.Background()
+
+		err = database.Save(ctx, &userData)
+		if err != nil {
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		resp := make(map[string]string)
+		resp["message"] = "successfully return"
+
+		userJson, err := json.Marshal(resp)
+		w.Write(userJson)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusMethodNotAllowed)
+
+	resp := make(map[string]string)
+	resp["message"] = "method not allowed"
+	userJson, _ := json.Marshal(resp)
+	w.Write(userJson)
+	return
+
+}
+
+func fetchDATA(w http.ResponseWriter, req *http.Request) {
 
 	ctx := context.Background()
 
-	err = database.Save(ctx, &userData)
+	userDatas := make([]Datas, 0)
+
+	err := database.Get(ctx, &userDatas)
 	if err != nil {
 		return
 	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	resp := make(map[string]string)
+	resp := make(map[string]interface{})
 	resp["message"] = "successfully return"
-
-	userJson, err := json.Marshal(resp)
+	resp["data"] = userDatas
+	userJson, _ := json.Marshal(resp)
 	w.Write(userJson)
 	return
 
@@ -47,6 +76,7 @@ func testRR(w http.ResponseWriter, req *http.Request) {
 func main() {
 
 	http.HandleFunc("/test", testRR)
+	http.HandleFunc("/fetch", fetchDATA)
 	err := http.ListenAndServe(":8090", nil)
 	log.Fatal(err)
 }

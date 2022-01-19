@@ -30,8 +30,7 @@ func Save(ctx context.Context, model interface{}) error {
 
 }
 
-//func Get(ctx context.Context, model interface{}) error {
-//	err := Db.NewSelect().Column().Model((model)(nil))
-//	return err
-//
-//}
+func Get(ctx context.Context, model interface{}) error {
+	query := Db.NewSelect().Column().Model(model).Scan(ctx)
+	return query
+}
