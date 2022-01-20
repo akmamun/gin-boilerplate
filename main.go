@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"go-pg/src/database"
+	"go-pg/src/helpers"
 	"log"
 	"net/http"
 	"time"
@@ -60,15 +61,17 @@ func fetchDATA(w http.ResponseWriter, req *http.Request) {
 
 	userDatas := make([]Datas, 0)
 
-	err := database.Get(ctx, &userDatas)
+	err := database.Get(ctx, &userDatas, "data", 10, 10)
 	if err != nil {
 		return
 	}
-	resp := make(map[string]interface{})
-	resp["message"] = "successfully return"
-	resp["data"] = userDatas
-	userJson, _ := json.Marshal(resp)
-	w.Write(userJson)
+	helpers.ResponseSuccess(w, 200, &userDatas)
+
+	//resp := make(map[string]interface{})
+	//resp["message"] = "successfully return"
+	//resp["data"] = userDatas
+	//userJson, _ := json.Marshal(resp)
+	//w.Write(userJson)
 	return
 
 }

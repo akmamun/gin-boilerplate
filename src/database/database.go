@@ -30,7 +30,7 @@ func Save(ctx context.Context, model interface{}) error {
 
 }
 
-func Get(ctx context.Context, model interface{}) error {
-	query := Db.NewSelect().Column().Model(model).Scan(ctx)
+func Get(ctx context.Context, model interface{}, orderBy string, limit int, offSet int) error {
+	query := Db.NewSelect().Column().Model(model).OrderExpr(orderBy).Limit(limit).Offset(offSet).Scan(ctx)
 	return query
 }
