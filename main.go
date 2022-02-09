@@ -61,7 +61,7 @@ func fetchDATA(w http.ResponseWriter, req *http.Request) {
 
 	userDatas := make([]Datas, 0)
 
-	err := database.Get(ctx, &userDatas, "data", 10, 10)
+	err := database.Get(ctx, &userDatas, "data")
 	if err != nil {
 		return
 	}

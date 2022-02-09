@@ -11,7 +11,7 @@ import (
 	"log"
 )
 
-var Db = *dbConnection()
+var DB = *dbConnection()
 
 // dbConnection create database connection
 func dbConnection() *bun.DB {
@@ -24,13 +24,13 @@ func dbConnection() *bun.DB {
 	return db
 }
 
-func Save(ctx context.Context, model interface{}) error {
-	_, err := Db.NewInsert().Model(model).Exec(ctx)
+func _Save(ctx context.Context, model interface{}) error {
+	_, err := DB.NewInsert().Model(model).Exec(ctx)
 	return err
 
 }
 
-func Get(ctx context.Context, model interface{}, orderBy string, limit int, offSet int) error {
-	query := Db.NewSelect().Column().Model(model).OrderExpr(orderBy).Limit(limit).Offset(offSet).Scan(ctx)
+func _Get(ctx context.Context, model interface{}, orderBy string, limit int, offSet int) error {
+	query := DB.NewSelect().Column().Model(model).OrderExpr(orderBy).Limit(limit).Offset(offSet).Scan(ctx)
 	return query
 }
