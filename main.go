@@ -11,7 +11,8 @@ import (
 )
 
 type Datas struct {
-	Data      *string   `json:"data"`
+	//ID        int64     `bun:",pk,autoincrement"`
+	Data      string    `json:"data"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
@@ -61,7 +62,7 @@ func fetchDATA(w http.ResponseWriter, req *http.Request) {
 
 	userDatas := make([]Datas, 0)
 
-	err := database.Get(ctx, &userDatas, "data")
+	err := database.Get(ctx, &userDatas, "datas", 10, 1)
 	if err != nil {
 		return
 	}

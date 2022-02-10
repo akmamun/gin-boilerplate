@@ -19,7 +19,9 @@ func dbConnection() *bun.DB {
 	dns := dbConfig.Database()
 	sqlDb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dns)))
 	db := bun.NewDB(sqlDb, pgdialect.New())
-	db.AddQueryHook(bundebug.NewQueryHook(bundebug.WithVerbose(true)))
+	db.AddQueryHook(bundebug.NewQueryHook(
+		bundebug.WithEnabled(false),
+		bundebug.FromEnv("BUN_DEBUG")))
 	log.Println("Database Successfully connected!")
 	return db
 }

@@ -10,6 +10,9 @@ func Save(ctx context.Context, model interface{}) error {
 }
 func Get(ctx context.Context, model interface{}, orderBy string, limit, offSet int) error {
 	query := _Get(ctx, model, orderBy, limit, offSet)
-
 	return query
+}
+
+func update() {
+
 }
