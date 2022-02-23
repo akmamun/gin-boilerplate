@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	env "go-pg/src/helpers"
+	env "pkg/src/helpers"
 )
 
 // Database configurations and return connection string

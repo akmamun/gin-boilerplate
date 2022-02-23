@@ -1,17 +1,22 @@
 package helpers
 
 import (
-	"encoding/json"
+	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-func ResponseSuccess(w http.ResponseWriter, httpCode int, data interface{}) interface{} {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(httpCode)
-	resp := make(map[string]interface{})
-	resp["message"] = "successfully return"
-	resp["data"] = data
-	userJson, _ := json.Marshal(resp)
-	w.Write(userJson)
-	return userJson
+func SuccessResponse(ctx *gin.Context, data interface{}) interface{} {
+	response := make(map[string]interface{})
+	response["message"] = "successfully return"
+	response["data"] = data
+	ctx.JSON(http.StatusOK, response)
+	return response
+}
+
+func ErrorResponse(ctx *gin.Context, data interface{}) interface{} {
+	response := make(map[string]interface{})
+	response["message"] = "Data validation error"
+	response["data"] = data
+	ctx.JSON(http.StatusBadRequest, response)
+	return response
 }
