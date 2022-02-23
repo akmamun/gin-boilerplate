@@ -1,4 +1,4 @@
-package helpers
+package applibs
 
 import (
 	"github.com/gin-gonic/gin"

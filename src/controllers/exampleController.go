@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	helpers "pkg/src/helpers"
+	helpers "pkg/src/applibs"
 )
 
 func ExampleResponse(ctx *gin.Context) {
