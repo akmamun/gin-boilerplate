@@ -2,17 +2,19 @@ package database
 
 import (
 	"fmt"
+	"log"
+	dbConfig "pkg/src/config"
+	"pkg/src/models"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
-	"log"
-	dbConfig "pkg/src/config"
 )
 
-var DB = *dbConnection()
+var DB = *DbConnection()
 
 // dbConnection create database connection
-func dbConnection() *gorm.DB {
+func DbConnection() *gorm.DB {
 	// connection string and open database
 	dns := dbConfig.Database()
 	db, err := gorm.Open(postgres.New(
@@ -22,14 +24,17 @@ func dbConnection() *gorm.DB {
 		}), &gorm.Config{})
 	if err != nil {
 		log.Println("Database connection error")
+		log.Fatal()
+
 	}
-	log.Println("Database Successfully connected!")
 	//db.AutoMigrate(&models.Book{})
+	db.AutoMigrate(&models.Example{})
+
 	return db
 }
 
-func _Save(model interface{}) interface{} {
-	query := DB.Create(&model)
+func Save(model interface{}) interface{} {
+	query := DB.Create(model)
 	if query.Error != nil {
 		fmt.Println(query.Error)
 	}
@@ -59,8 +64,8 @@ func _GetLast(model interface{}, fieldData schema.Field) interface{} {
 	}
 	return query
 }
-func _GetAll(model interface{}, limit, offSet int) interface{} {
-	query := DB.Limit(limit).Offset(offSet).Find(&model)
+func GetAll(model interface{}, limit, offSet int) interface{} {
+	query := DB.Limit(limit).Offset(offSet).Find(model)
 	if query.Error != nil {
 		fmt.Println(query.Error)
 	}

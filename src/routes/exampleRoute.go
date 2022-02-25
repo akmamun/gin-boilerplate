@@ -6,5 +6,7 @@ import (
 )
 
 func ExampleRoutes(route *gin.Engine) {
-	route.GET("/example/", controller.ExampleResponse)
+	route.GET("/example/", controller.ExampleGetResponse)
+	route.POST("/example/", controller.ExampleResponse)
+
 }

@@ -4,6 +4,7 @@ package database
 //import (
 //	"context"
 //)
+
 //
 //func Save(ctx context.Context, model interface{}) error {
 //	err := _Save(ctx, model)
