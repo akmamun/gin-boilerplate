@@ -2,74 +2,79 @@ package database
 
 import (
 	"fmt"
-	"log"
-	dbConfig "pkg/src/config"
-	"pkg/src/models"
-
+	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"gorm.io/gorm/schema"
+	"gorm.io/gorm/logger"
+	"log"
+	"pkg/src/models"
 )
 
-var DB = *DbConnection()
+var (
+	DB    *gorm.DB
+	err   error
+	DBErr error
+)
 
-// dbConnection create database connection
-func DbConnection() *gorm.DB {
-	// connection string and open database
-	dns := dbConfig.Database()
-	db, err := gorm.Open(postgres.New(
-		postgres.Config{
-			DSN:                  dns,
-			PreferSimpleProtocol: true, // disables implicit prepared statement usage
-		}), &gorm.Config{})
+type Database struct {
+	*gorm.DB
+}
+
+func dbConfiguration() string {
+	dbname := viper.GetString("database.dbname")
+	username := viper.GetString("database.username")
+	password := viper.GetString("database.password")
+	host := viper.GetString("database.host")
+	port := viper.GetString("database.port")
+	sslMode := viper.GetString("database.sslmode")
+
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+		host, username, password, dbname, port, sslMode,
+	)
+	return dsn
+}
+
+// DbConnection create database connection
+func DbConnection() error {
+	var db = DB
+	dsn := dbConfiguration()
+
+	logMode := viper.GetBool("database.logmode")
+	loglevel := logger.Silent
+
+	if logMode {
+		loglevel = logger.Info
+	}
+
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(loglevel),
+	})
+
 	if err != nil {
-		log.Println("Database connection error")
-		log.Fatal()
-
+		DBErr = err
+		log.Println("DbConfiguration connection error")
+		return err
 	}
-	//db.AutoMigrate(&models.Book{})
-	db.AutoMigrate(&models.Example{})
 
-	return db
+	err = db.AutoMigrate(&models.Example{})
+	if err != nil {
+		return err
+	}
+	DB = db
+
+	return nil
+
 }
 
-func Save(model interface{}) interface{} {
-	query := DB.Create(model)
-	if query.Error != nil {
-		fmt.Println(query.Error)
-	}
-	return query
+// GetDB helps you to get a connection
+func GetDB() *gorm.DB {
+	return DB
 }
 
-func _GetOne(model interface{}, field string, value interface{}) interface{} {
-	query := DB.Where(fmt.Sprintf("%v = ?", field), value).Find(&model)
-	if query.Error != nil {
-		fmt.Println(query.Error)
-	}
-	return query
-}
-
-func _GetFirst(model interface{}, field string) interface{} {
-	query := DB.First(&model, field)
-	if query.Error != nil {
-		fmt.Println(query.Error)
-	}
-	return query
-}
-
-func _GetLast(model interface{}, fieldData schema.Field) interface{} {
-	query := DB.Last(&model, fieldData)
-	if query.Error != nil {
-		fmt.Println(query.Error)
-	}
-	return query
-}
-func GetAll(model interface{}, limit, offSet int) interface{} {
-	query := DB.Limit(limit).Offset(offSet).Find(model)
-	if query.Error != nil {
-		fmt.Println(query.Error)
-	}
-	return query
+// GetDBErr helps you to get a connection
+func GetDBErr() error {
+	return DBErr
 }
 
 //func _GetSelected() {
