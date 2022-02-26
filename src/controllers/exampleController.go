@@ -2,11 +2,13 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
+	response "pkg/src/applibs"
 	"pkg/src/database"
 	"pkg/src/models"
 )
 
-func (base *Controller) CreatePost(ctx *gin.Context) {
+func (base *Controller) CreateExample(ctx *gin.Context) {
 	example := new(models.Example)
 
 	err := ctx.ShouldBindJSON(&example)
@@ -16,12 +18,22 @@ func (base *Controller) CreatePost(ctx *gin.Context) {
 	}
 
 	saveData, err := database.Save(base.DB, &example)
-	//if err != nil {
-	//	ctx.AbortWithStatus(404)
-	//	return
-	//}
+	if err != nil {
+		ctx.AbortWithStatus(404)
+		return
+	}
 
 	ctx.JSON(200, saveData)
+}
+
+func (base *Controller) GetExample(ctx *gin.Context) {
+	var example []models.Example
+
+	//pagination := response.LimitOffsetOrPagination(ctx)
+	//fmt.Print(pagination)
+	database.GetAll(base.DB, &example)
+	ctx.JSON(http.StatusOK, response.SuccessfullyGet(&example))
+
 }
 
 //
@@ -38,13 +50,3 @@ func (base *Controller) CreatePost(ctx *gin.Context) {
 //
 //}
 //
-//func ExampleGetResponse(ctx *gin.Context) {
-//	var example models.Example
-//
-//	pagination := response.LimitOffsetOrPagination(ctx)
-//	fmt.Print(pagination)
-//
-//	database.GetAll(&example, &pagination)
-//	ctx.JSON(http.StatusOK, response.SuccessfullyGet(&example))
-//
-//}

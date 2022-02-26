@@ -5,14 +5,12 @@ import (
 	"pkg/src/logger"
 )
 
-//var Config *Configuration
-
 type Configuration struct {
 	Server   ServerConfiguration
 	Database DatabaseConfiguration
 }
 
-// SetupConfig initialize configuration
+// SetupConfig configuration
 func SetupConfig() error {
 	var configuration *Configuration
 
@@ -30,8 +28,6 @@ func SetupConfig() error {
 		logger.Errorf("Unable to decode into struct, %v", err)
 		return err
 	}
-
-	//Config = configuration
 
 	return nil
 }

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
-	pagination "pkg/src/applibs"
 	"pkg/src/logger"
 )
 
@@ -49,17 +48,29 @@ func _GetLast(model interface{}, fieldData schema.Field) interface{} {
 	}
 	return query
 }
-func GetAll(model interface{}, pagination *pagination.Pagination) interface{} {
-	offset := (pagination.Page - 1) * pagination.Limit
-	query := DB.Limit(pagination.Limit).Offset(offset).Order(pagination.OrderBy)
-	result := query.Model(&model).Where(model).Find(&model)
 
-	if result.Error != nil {
-		fmt.Println(result.Error)
-	}
+func GetAll(db *gorm.DB, model interface{}) interface{} {
+	query := db.Find(model)
+	//result := query.Model(&model).Where(model).Find(&model)
 
-	return result
+	//if result.Error != nil {
+	//	fmt.Println(result.Error)
+	//}
+
+	return query
 }
+
+//func GetAll(model interface{}, pagination *pagination.Pagination) interface{} {
+//	offset := (pagination.Page - 1) * pagination.Limit
+//	query := DB.Limit(pagination.Limit).Offset(offset).Order(pagination.OrderBy)
+//	result := query.Model(&model).Where(model).Find(&model)
+//
+//	if result.Error != nil {
+//		fmt.Println(result.Error)
+//	}
+//
+//	return result
+//}
 
 //
 //import (
