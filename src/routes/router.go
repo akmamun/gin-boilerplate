@@ -18,7 +18,7 @@ func Routers(db *gorm.DB) *gin.Engine {
 		ctx.JSON(http.StatusOK, gin.H{"success": true, "data": nil, "message": "system is live "})
 	})
 	route.POST("/example/", api.CreateExample)
-	route.GET("/example/", api.GetExample)
+	route.GET("/example/", api.GetExamples)
 
 	return route
 }
