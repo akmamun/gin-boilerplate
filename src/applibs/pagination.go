@@ -1,34 +1,69 @@
 package applibs
 
-import "strconv"
+import (
+	"fmt"
+	"github.com/spf13/viper"
+	"gorm.io/gorm"
+)
 
-type Data struct {
-	TotalData    int64
-	FilteredData int64
-	Data         interface{}
+type Result struct {
+	Total    int         `json:"total"`
+	Data     interface{} `json:"data"`
+	Offset   int         `json:"offset"`
+	Limit    int         `json:"limit"`
+	Page     int         `json:"page"`
+	PrevPage string      `json:"prev_page"`
+	NextPage string      `json:"next_page"`
 }
 
-type Args struct {
-	Sort   string
-	Order  string
-	Offset string
-	Limit  string
-	Search string
+type Param struct {
+	Page  int
+	Sort  string
+	Limit int
+	Path  string
 }
 
-func Offset(offset string) int {
-	offsetInt, err := strconv.Atoi(offset)
-	if err != nil {
-		offsetInt = 0
+func (p *Param) Paginate(db *gorm.DB, any interface{}) (Result, *gorm.DB) {
+	var r Result
+	var count int64
+
+	offset := (p.Page - 1) * p.Limit
+	//lastIndex := offset * param.Page
+	data := db.Offset(offset).Limit(p.Limit)
+
+	if p.Sort != "" {
+		data.Order(p.Sort)
 	}
-	return offsetInt
+
+	data.Find(any)
+	db.Model(any).Count(&count)
+
+	r.Page = p.Page
+
+	r.NextPage = p.GetPageURL(p.Page + 1)
+	r.PrevPage = p.PreviousPage()
+
+	r.Total = int(count)
+	r.Data = any
+
+	return r, data
 }
 
-// Limit returns the number of result for pagination
-func Limit(limit string) int {
-	limitInt, err := strconv.Atoi(limit)
-	if err != nil {
-		limitInt = 25
+func (p *Param) GetPageURL(page int) string {
+	return fmt.Sprintf("%s%s?page=%d&limit=%d", GetAppURL(), p.Path, page, p.Limit)
+}
+
+func (p *Param) PreviousPage() string {
+	pageNumber := 1
+
+	if p.Page > 1 {
+		pageNumber = p.Page - 1
 	}
-	return limitInt
+
+	return p.GetPageURL(pageNumber)
+}
+func GetAppURL() string {
+	host := viper.GetString("server.host")
+	port := viper.GetString("server.port")
+	return host + ":" + port
 }
