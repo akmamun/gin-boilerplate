@@ -1,6 +1,7 @@
 package config
 
 type ServerConfiguration struct {
-	Port   string
-	Secret string
+	Port                 string
+	Secret               string
+	LimitCountPerRequest float64
 }

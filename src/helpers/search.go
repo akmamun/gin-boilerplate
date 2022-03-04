@@ -1,4 +1,4 @@
-package applibs
+package helpers
 
 type Search struct {
 	Column string `json:"column"`

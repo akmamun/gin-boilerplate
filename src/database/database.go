@@ -20,7 +20,7 @@ type Database struct {
 	*gorm.DB
 }
 
-func dbConfiguration() string {
+func configuration() string {
 	dbname := viper.GetString("database.dbname")
 	username := viper.GetString("database.username")
 	password := viper.GetString("database.password")
@@ -35,10 +35,10 @@ func dbConfiguration() string {
 	return dsn
 }
 
-// DbConnection create database connection
-func DbConnection() error {
+// Connection create database connection
+func Connection() error {
 	var db = DB
-	dsn := dbConfiguration()
+	dsn := configuration()
 
 	logMode := viper.GetBool("database.logmode")
 	loglevel := logger.Silent

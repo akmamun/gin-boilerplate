@@ -1,33 +1,30 @@
 package main
 
 import (
-	"fmt"
 	"github.com/spf13/viper"
 	"pkg/src/config"
 	"pkg/src/database"
 	"pkg/src/logger"
-	"pkg/src/routes"
+	"pkg/src/routers"
 )
 
 func main() {
 	if err := config.SetupConfig(); err != nil {
-		logger.Fatalf("config.ConfigSetup() error: %s", err)
+		logger.Fatalf("config.SetupConfig() error: %s", err)
 	}
 
-	if err := database.DbConnection(); err != nil {
+	if err := database.Connection(); err != nil {
 		logger.Fatalf("database.DbConnection error: %s", err)
 	}
 
 	db := database.GetDB()
-	//
-	route := routes.Routers(db)
+	router := routers.Routes(db)
 
-	host := "127.0.0.1"
-	if h := viper.GetString("server.host"); h != "" {
-		host = h
+	host := viper.GetString("server.host")
+	if host == "" {
+		host = "0.0.0.0"
 	}
 	logger.Infof("Server is starting at %s:%s", host, viper.GetString("server.port"))
-	fmt.Printf("Server is starting at %s:%s.", host, viper.GetString("server.port"))
-	logger.Fatalf("%v", route.Run(host+":"+viper.GetString("server.port")))
+	logger.Fatalf("%v", router.Run(host+":"+viper.GetString("server.port")))
 
 }
