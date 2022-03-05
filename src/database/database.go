@@ -1,33 +1,79 @@
 package database
 
 import (
-	"context"
-	"database/sql"
 	"fmt"
-	"github.com/uptrace/bun"
-	"github.com/uptrace/bun/dialect/pgdialect"
-	"github.com/uptrace/bun/driver/pgdriver"
-	"github.com/uptrace/bun/extra/bundebug"
-
-	"go-pg/src/config"
+	"github.com/spf13/viper"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"log"
+	"pkg/src/models"
 )
 
-func dbConnection() (db *bun.DB) {
-	// connection string and open database
-	dsn := config.Database()
-	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
-	db = bun.NewDB(sqldb, pgdialect.New())
-	db.AddQueryHook(bundebug.NewQueryHook(bundebug.WithVerbose(true)))
-	fmt.Println("Successfully connected!")
-	return db
+var (
+	DB    *gorm.DB
+	err   error
+	DBErr error
+)
 
+type Database struct {
+	*gorm.DB
 }
 
-func Save(ctx context.Context, data interface{}) interface{} {
-	db := dbConnection()
-	res, err := db.NewInsert().Model(data).Exec(ctx)
-	if err != nil {
-		panic(err)
+func configuration() string {
+	dbname := viper.GetString("database.dbname")
+	username := viper.GetString("database.username")
+	password := viper.GetString("database.password")
+	host := viper.GetString("database.host")
+	port := viper.GetString("database.port")
+	sslMode := viper.GetString("database.sslmode")
+
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+		host, username, password, dbname, port, sslMode,
+	)
+	return dsn
+}
+
+// Connection create database connection
+func Connection() error {
+	var db = DB
+	dsn := configuration()
+
+	logMode := viper.GetBool("database.logmode")
+	loglevel := logger.Silent
+
+	if logMode {
+		loglevel = logger.Info
 	}
-	return res
+
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(loglevel),
+	})
+
+	if err != nil {
+		DBErr = err
+		log.Println("DbConfiguration connection error")
+		return err
+	}
+
+	err = db.AutoMigrate(&models.Example{})
+	if err != nil {
+		return err
+	}
+	DB = db
+
+	return nil
+
 }
+
+// GetDB connection
+func GetDB() *gorm.DB {
+	return DB
+}
+
+// GetDBErr connection error
+func GetDBErr() error {
+	return DBErr
+}
+
