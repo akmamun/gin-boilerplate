@@ -8,7 +8,7 @@ import (
 )
 
 func TestController(ctx *gin.Context) {
-	ctx.String(http.StatusOK, "ok")
+	ctx.String(http.StatusOK, "test data ok")
 }
 
 func TestRoutes(route *gin.Engine, db *gorm.DB) {

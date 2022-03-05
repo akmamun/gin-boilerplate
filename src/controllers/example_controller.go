@@ -33,8 +33,9 @@ func (base *Controller) GetExamples(ctx *gin.Context) {
 	limit, _ := strconv.Atoi(ctx.DefaultQuery("limit", "0"))
 	query := ctx.DefaultQuery("query", "")
 
+	//db := base.DB.Where("")
 	paginateData := pagination.Pagination(&pagination.Param{
-		DB:    base.DB,
+		DB:    base.DB, //db
 		Page:  int64(page),
 		Limit: int64(limit),
 		//OrderBy: "id desc",

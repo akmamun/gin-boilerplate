@@ -24,15 +24,6 @@ type Result struct {
 	Data        interface{} `json:"data"`
 }
 
-func Search(search, field string) func(db *gorm.DB) *gorm.DB {
-	return func(db *gorm.DB) *gorm.DB {
-		if search != "" {
-			db = db.Where("%"+field+"%", "%"+search+"%")
-			//db = db.Or("description LIKE ?", "%"+search+"%")
-		}
-		return db
-	}
-}
 func Pagination(param *Param, resultData interface{}) *Result {
 	db := param.DB
 
@@ -57,7 +48,6 @@ func Pagination(param *Param, resultData interface{}) *Result {
 	db.Offset(int(offset)).
 		Limit(int(param.Limit)).
 		Order(param.OrderBy).
-		//Scopes(Search(param.Search)).
 		Find(resultData)
 
 	<-done
