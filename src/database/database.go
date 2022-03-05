@@ -67,21 +67,13 @@ func Connection() error {
 
 }
 
-// GetDB helps you to get a connection
+// GetDB connection
 func GetDB() *gorm.DB {
 	return DB
 }
 
-// GetDBErr helps you to get a connection
+// GetDBErr connection error
 func GetDBErr() error {
 	return DBErr
 }
 
-//func _GetSelected() {
-//	DB.Select("Name", "Age", "CreatedAt").Create(&user)
-//
-//}
-//func _update(model interface{}, fieldData schema.Field) {
-//	data := (&model, fieldData)
-//	data.field = model
-//}

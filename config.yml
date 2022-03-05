@@ -5,12 +5,12 @@ database:
   password: "123"
   host: "localhost"
   port: "5432"
-  logmode: false
+  logmode: true
 
 server:
   host: "0.0.0.0"
   port: "8000"
   secret: "mySecretKey"
-  environment: "prod" #prod
+  environment: "dev" #prod
   limitCountPerRequest: 1
 
