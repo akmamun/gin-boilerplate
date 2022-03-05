@@ -1,25 +1,79 @@
 package database
 
 import (
-	"database/sql"
 	"fmt"
-	dbconfig "go-pg/src/config"
+	"github.com/spf13/viper"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"log"
+	"pkg/src/models"
 )
 
-// dbConnection create database connection
-func dbConnection() {
-	// connection string and open database
-	db, err := sql.Open("postgres", dbconfig.Database())
+var (
+	DB    *gorm.DB
+	err   error
+	DBErr error
+)
 
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
-	err = db.Ping()
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println("Successfully connected!")
+type Database struct {
+	*gorm.DB
 }
+
+func configuration() string {
+	dbname := viper.GetString("database.dbname")
+	username := viper.GetString("database.username")
+	password := viper.GetString("database.password")
+	host := viper.GetString("database.host")
+	port := viper.GetString("database.port")
+	sslMode := viper.GetString("database.sslmode")
+
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+		host, username, password, dbname, port, sslMode,
+	)
+	return dsn
+}
+
+// Connection create database connection
+func Connection() error {
+	var db = DB
+	dsn := configuration()
+
+	logMode := viper.GetBool("database.logmode")
+	loglevel := logger.Silent
+
+	if logMode {
+		loglevel = logger.Info
+	}
+
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(loglevel),
+	})
+
+	if err != nil {
+		DBErr = err
+		log.Println("DbConfiguration connection error")
+		return err
+	}
+
+	err = db.AutoMigrate(&models.Example{})
+	if err != nil {
+		return err
+	}
+	DB = db
+
+	return nil
+
+}
+
+// GetDB connection
+func GetDB() *gorm.DB {
+	return DB
+}
+
+// GetDBErr connection error
+func GetDBErr() error {
+	return DBErr
+}
+
