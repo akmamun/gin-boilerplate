@@ -3,7 +3,7 @@ database:
   dbname: "test_pg_go"
   username: "mamun"
   password: "123"
-  host: "localhost"
+  host: "pg_db"
   port: "5432"
   logmode: true
 
@@ -12,5 +12,4 @@ server:
   port: "8000"
   secret: "mySecretKey"
   environment: "dev" #prod
-  limitCountPerRequest: 1
 

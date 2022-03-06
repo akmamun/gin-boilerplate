@@ -7,6 +7,7 @@ An API boilerplate written in Golang with Gin Framework
 - To add all dependencies for a package in your module `go get .` in the current directory
 
 ### Lets Run
-- `go run main.go` or `go build main.go` and run `./main`
-- The application should be available and running on localhost:8000
+- Docker Run `docker-compose up`
+- Locally Run`go run main.go` or `go build main.go` and run `./main`
+- The application should be available and running on 0.0.0.0:8000
 
