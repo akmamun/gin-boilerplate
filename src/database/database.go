@@ -57,7 +57,11 @@ func Connection() error {
 		return err
 	}
 
-	err = db.AutoMigrate(&models.Example{})
+	//err = db.AutoMigrate(&model.Example{}, &model.Address{})
+	var models = []interface{}{&models.Example{}}
+
+	err = db.AutoMigrate(models...)
+
 	if err != nil {
 		return err
 	}
@@ -76,4 +80,3 @@ func GetDB() *gorm.DB {
 func GetDBErr() error {
 	return DBErr
 }
-
