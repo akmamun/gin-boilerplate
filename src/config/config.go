@@ -25,7 +25,7 @@ func SetupConfig() error {
 
 	err := viper.Unmarshal(&configuration)
 	if err != nil {
-		logger.Errorf("Unable to decode, %v", err)
+		logger.Errorf("error to decode, %v", err)
 		return err
 	}
 

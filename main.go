@@ -20,11 +20,10 @@ func main() {
 	db := database.GetDB()
 	router := routers.Routes(db)
 
-	host := viper.GetString("server.host")
-	if host == "" {
-		host = "0.0.0.0"
-	}
-	logger.Infof("Server is starting at %s:%s", host, viper.GetString("server.port"))
-	logger.Fatalf("%v", router.Run(host+":"+viper.GetString("server.port")))
+	viper.SetDefault("server.host", "0.0.0.0")
+	viper.SetDefault("server.port", "8000")
+
+	logger.Infof("Server is starting at %s:%s", viper.GetString("server.host"), viper.GetString("server.port"))
+	logger.Fatalf("%v:%v", router.Run(viper.GetString("server.host")+":"+viper.GetString("server.port")))
 
 }

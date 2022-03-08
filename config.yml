@@ -12,4 +12,6 @@ server:
   port: "8000"
   secret: "mySecretKey"
   environment: "dev" #prod
+  request:
+    timeout: 100
 
