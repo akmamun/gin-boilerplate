@@ -7,7 +7,6 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"log"
-	"pkg/src/models"
 )
 
 var (
@@ -57,10 +56,7 @@ func Connection() error {
 		return err
 	}
 
-	//err = db.AutoMigrate(&model.Example{}, &model.Address{})
-	var models = []interface{}{&models.Example{}}
-
-	err = db.AutoMigrate(models...)
+	err = db.AutoMigrate(migrationModels...)
 
 	if err != nil {
 		return err
