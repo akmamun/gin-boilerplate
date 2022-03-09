@@ -3,7 +3,6 @@ module pkg
 go 1.16
 
 require (
-	github.com/VojtechVitek/rerun v0.0.3 // indirect
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/sirupsen/logrus v1.4.2
