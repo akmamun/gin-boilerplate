@@ -5,10 +5,13 @@ services:
     container_name: core_pg_db
     image: postgres:13-alpine
     environment:
-      - POSTGRES_DB=test_pg_go
+      - POSTGRES_DB=${database.username}
       - POSTGRES_USER=mamun
       - POSTGRES_PASSWORD=123
+
     restart: always
+    networks:
+      - servernet
 
   server:
     container_name: go_server
@@ -22,5 +25,12 @@ services:
     links:
       - postgres_db:postgres_db
     restart: on-failure
+    networks:
+      - servernet
 
 
+
+# networks to be created to communication between containers
+networks:
+  servernet:
+    driver: bridge

@@ -3,7 +3,7 @@ database:
   dbname: "test_pg_go"
   username: "mamun"
   password: "123"
-  host: "0.0.0.0"
+  host: "postgres_db"
   port: "5432"
   logmode: true
 

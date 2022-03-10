@@ -29,7 +29,7 @@ func Routes(db *gorm.DB) *gin.Engine {
 			gin.H{"status": http.StatusNotFound, "message": "Route Not Found"})
 	})
 
-	router.GET("/status", func(ctx *gin.Context) {
+	router.GET("/health", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "active": true})
 	})
 
