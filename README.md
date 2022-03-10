@@ -1,7 +1,7 @@
 # Gin Gorm Boilerplate
 An API boilerplate written in Golang with Gin Framework
 
-## Docker Development with Live Reload
+### Docker Development with Live Reload
 - Run `make dev`
 
 ### Local Installation
