@@ -23,7 +23,6 @@ func main() {
 	viper.SetDefault("server.host", "0.0.0.0")
 	viper.SetDefault("server.port", "8000")
 
-	logger.Infof("Server is starting at %s:%s", viper.GetString("server.host"), viper.GetString("server.port"))
 	logger.Fatalf("%v:%v", router.Run(viper.GetString("server.host")+":"+viper.GetString("server.port")))
 
 }

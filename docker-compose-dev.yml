@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  postgres_db:
+    container_name: dev_pg_db
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=test_pg_go
+      - POSTGRES_USER=mamun
+      - POSTGRES_PASSWORD=123
+    restart: always
+
+
+  server:
+    container_name: dev_go_server
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres_db
+    links:
+      - postgres_db:postgres_db
+    volumes:
+      - .:/app
+    restart: on-failure
+
+
+
