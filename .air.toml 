@@ -3,13 +3,13 @@
 # Working directory
 # . or absolute path, please note that the directories following must be under root
 root = "."
-tmp_dir = "tmp"
+tmp_dir = "/tmp"
 
 [build]
 # Just plain old shell command. You could use `make` as well.
 cmd = "go build -o ./tmp/app/engine main.go"
 # Binary file yields from `cmd`.
-bin = "tmp/app"
+bin = "/tmp/app"
 
 # Customize binary.
 # This is how you start to run your application. Since my application will works like CLI, so to run it, like to make a CLI call.

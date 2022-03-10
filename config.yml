@@ -5,12 +5,12 @@ database:
   password: "123"
   host: "postgres_db"
   port: "5432"
-  logmode: true
+  log_mode: true
 
 server:
   host: "0.0.0.0"
   port: "8000"
-  secret: "mySecretKey"
+  secret: "secret"
   environment: "dev" #prod
   request:
     timeout: 100
