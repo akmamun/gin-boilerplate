@@ -1,12 +1,12 @@
 package database
 
 import (
-	"fmt"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"log"
+	"pkg/src/config"
 )
 
 var (
@@ -19,29 +19,13 @@ type Database struct {
 	*gorm.DB
 }
 
-func configuration() string {
-	dbname := viper.GetString("database.dbname")
-	username := viper.GetString("database.username")
-	password := viper.GetString("database.password")
-	host := viper.GetString("database.host")
-	port := viper.GetString("database.port")
-	sslMode := viper.GetString("database.sslmode")
-
-	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
-		host, username, password, dbname, port, sslMode,
-	)
-	return dsn
-}
-
 // Connection create database connection
 func Connection() error {
 	var db = DB
-	dsn := configuration()
+	dsn := config.DbConfiguration()
 
-	logMode := viper.GetBool("database.logmode")
+	logMode := viper.GetBool("database.log_mode")
 	loglevel := logger.Silent
-
 	if logMode {
 		loglevel = logger.Info
 	}
@@ -52,7 +36,7 @@ func Connection() error {
 
 	if err != nil {
 		DBErr = err
-		log.Println("DbConfiguration connection error")
+		log.Println("Db connection error")
 		return err
 	}
 
@@ -72,7 +56,7 @@ func GetDB() *gorm.DB {
 	return DB
 }
 
-// GetDBErr connection error
-func GetDBErr() error {
+// GetDBError connection error
+func GetDBError() error {
 	return DBErr
 }
