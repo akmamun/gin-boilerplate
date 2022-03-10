@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"pkg/src/models"
+	"pkg/src/examples/models"
 )
 
 // GetNormalData get normal data if added pagination see example_controller
