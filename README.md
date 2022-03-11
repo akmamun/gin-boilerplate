@@ -5,12 +5,12 @@ An API boilerplate written in Golang with Gin Framework
 ### Docker Development with Live Reload
 - run `make dev`
 
-### Local Instruction
+### Local Setup Instruction
 Follow these steps:
 - Configuration manage from [config.yml](config.yml) file
 - To add all dependencies for a package in your module `go get .` in the current directory
 - Locally run `go run main.go` or `go build main.go` and run `./main`
-- The application should be available and running on [0.0.0.0:8000](http://0.0.0.0:8000)
+- The application should be available and running on [0.0.0.0:8000/health](http://0.0.0.0:8000/health)
 
 ### Build for Production
 - run `make production`

@@ -6,10 +6,10 @@ type Response struct {
 	Data    interface{} `json:"data"`
 }
 
-func SuccessfullyGet(data interface{}) interface{} {
-	response := make(map[string]interface{})
-	response["success"] = true
-	response["message"] = "successfully return"
-	response["data"] = data
-	return response
-}
+//func SuccessfullyGet(data interface{}) interface{} {
+//	response := make(map[string]interface{})
+//	response["success"] = true
+//	response["message"] = "successfully return"
+//	response["data"] = data
+//	return response
+//}
