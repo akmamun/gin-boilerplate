@@ -31,13 +31,16 @@ Follow these steps:
 - Locally run `go run main.go` or `go build main.go` and run `./main`
 - The application should be available and running on [0.0.0.0:8000/health](http://0.0.0.0:8000/health)
 
-### Container Build
+### Container Development Build
 - run `make build`
-- 
-### Build for Production
+
+### Container Production Build and Up
 - run `make production`
 
-### Under the hood
+### Examples
+- [Examples](src/examples) contain sample code of different example
+
+### Under the hood Used Packages 
 - [Viper](https://github.com/spf13/viper) - Go configuration with fangs.
 - [Gorm](https://github.com/go-gorm/gorm) - The fantastic ORM library for Golang
 - [Logger](https://github.com/sirupsen/logrus) - Structured, pluggable logging for Go.
