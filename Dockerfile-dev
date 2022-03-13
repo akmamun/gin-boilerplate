@@ -1,4 +1,4 @@
-FROM golang:alpine as dev
+FROM golang:1.17-alpine
 
 RUN apk --no-cache add curl
 # Install the air binary so we get live code-reloading when we save files
@@ -6,5 +6,4 @@ RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh 
 
 # Run the air command in the directory where our code will live
 WORKDIR /app
-RUN echo air -v
 CMD ["air"]
