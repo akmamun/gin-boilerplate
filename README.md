@@ -126,3 +126,92 @@ router.Use(middleware.CORSMiddleware())
 ### Code Examples
 - [Example](src/examples) contains sample code of different type of example
 
+### Lets Build a Endpoint
+
+1. [models](src/models) folder add a new file name `example_model.go`
+
+```go
+package models
+
+import (
+	"time"
+)
+
+type Example struct {
+	Id        int        `json:"id"`
+	Data      string     `json:"data" binding:"required"`
+	CreatedAt *time.Time `json:"created_at,string,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at_at,string,omitempty"`
+}
+
+// TableName is Database Table Name of this model
+func (e *Example) TableName() string {
+	return "examples"
+}
+
+```
+2. [controller](src/controllers) folder add a file `example_controller.go`
+- Create API Endpoint 
+- Use any syntax of GORM after `base.DB`, this is wrapper of `*gorm.DB`
+```go
+package controllers
+
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+	"pkg/src/logger"
+	"pkg/src/models"
+)
+
+func (base *Controller) CreateExample(ctx *gin.Context) {
+	example := new(models.Example)
+
+	err := ctx.ShouldBindJSON(&example)
+	if err != nil {
+		logger.Errorf("error: %v", err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	err = base.DB.Create(&example).Error
+	if err != nil {
+		logger.Errorf("error: %v", err)
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, &example)
+}
+```
+3. [routers](src/routers) folder add a file `example.go`
+```go
+package routers
+
+import (
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+	"pkg/src/controllers"
+)
+
+
+func TestRoutes(route *gin.Engine, db *gorm.DB) {
+	ctrl := controllers.Controller{DB: db}
+	v1 := route.Group("/v1")
+	v1.POST("/example/", ctrl.CreateExample)
+}
+```
+4. Finally, register routes to [index.go](src/routers/index.go)
+```go
+package routers
+
+import (
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+	"net/http"
+)
+
+//RegisterRoutes add all routing list here automatically get main router
+func RegisterRoutes(route *gin.Engine, db *gorm.DB) {
+	//Add All route
+	TestRoutes(route, db)
+}
+```
+5. Congratulation, you created a endpoint `0.0.0.0:8000/v1/example/`
