@@ -1,10 +1,10 @@
 package routers
 
 import (
+	"gin-boilerplate/controllers"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"net/http"
-	"pkg/src/controllers"
 )
 
 func TestController(ctx *gin.Context) {

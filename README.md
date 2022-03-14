@@ -57,8 +57,8 @@ database:
 ### Develop Application in Docker Compose with Live Reload
 Follow these steps:
 - Make sure install the latest version of docker and docker-compose
-- Installation instruction for your desire OS https://docs.docker.com/engine/install/ubuntu/
-- Install docker composer https://docs.docker.com/compose/install/
+- Docker Installation for your desire OS https://docs.docker.com/engine/install/ubuntu/
+- Docker Composer Installation https://docs.docker.com/compose/install/
 - Run `make dev`
 
 ### Local Setup Instruction
@@ -130,11 +130,11 @@ router.Use(middleware.CORSMiddleware())
 
 
 ### Code Examples
-- [Example](src/examples) contains sample code of different type of example
+- [Example](examples) contains sample code of different type of example
 
 ### Lets Build a Endpoint
 
-1. [models](src/models) folder add a new file name `example_model.go`
+1. [models](models) folder add a new file name `example_model.go`
 
 ```go
 package models
@@ -154,19 +154,31 @@ type Example struct {
 func (e *Example) TableName() string {
 	return "examples"
 }
+```
+2. Add Model to [migration](pkg/database/migration.go)
+```go
+package database
+
+import (
+	"gin-boilerplate/models"
+)
+
+//Add list of model add for migrations
+var migrationModels = []interface{}{&models.Example{}}
 
 ```
-2. [controller](src/controllers) folder add a file `example_controller.go`
+3. [controller](controllers) folder add a file `example_controller.go`
 - Create API Endpoint 
 - Use any syntax of GORM after `base.DB`, this is wrapper of `*gorm.DB`
+
 ```go
 package controllers
 
 import (
+	"gin-boilerplate/models"
+	"gin-boilerplate/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"pkg/src/logger"
-	"pkg/src/models"
 )
 
 func (base *Controller) CreateExample(ctx *gin.Context) {
@@ -187,14 +199,14 @@ func (base *Controller) CreateExample(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, &example)
 }
 ```
-3. [routers](src/routers) folder add a file `example.go`
+4. [routers](pkg/routers) folder add a file `example.go`
 ```go
 package routers
 
 import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"pkg/src/controllers"
+	"gin-boilerplate/controllers"
 )
 
 
@@ -204,7 +216,7 @@ func TestRoutes(route *gin.Engine, db *gorm.DB) {
 	v1.POST("/example/", ctrl.CreateExample)
 }
 ```
-4. Finally, register routes to [index.go](src/routers/index.go)
+5. Finally, register routes to [index.go](pkg/routers/index.go)
 ```go
 package routers
 
@@ -220,7 +232,7 @@ func RegisterRoutes(route *gin.Engine, db *gorm.DB) {
 	TestRoutes(route, db)
 }
 ```
-5. Congratulation, you created a endpoint `0.0.0.0:8000/v1/example/`
+- Congratulation, your endpoint created `0.0.0.0:8000/v1/example/`
 
 ### Useful Commands
 

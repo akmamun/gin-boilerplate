@@ -1,12 +1,12 @@
 package database
 
 import (
+	"gin-boilerplate/pkg/config"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 	"log"
-	"pkg/src/config"
 )
 
 var (
