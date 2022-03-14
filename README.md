@@ -82,8 +82,11 @@ router.Use(gin.Logger())
 router.Use(gin.Recovery())
 router.Use(middleware.CORSMiddleware())
 ```
-### Boilerplate structure
+### Boilerplate Structure
 <pre>├── config.yml
+├── <font color="#3465A4"><b>controllers</b></font>
+│   ├── controller.go
+│   └── example_controller.go
 ├── docker-compose-dev.yml
 ├── docker-compose-prod.yml
 ├── Dockerfile
@@ -93,35 +96,31 @@ router.Use(middleware.CORSMiddleware())
 ├── LICENSE
 ├── main.go
 ├── Makefile
+├── <font color="#3465A4"><b>models</b></font>
+│   └── example_model.go
+├── <font color="#3465A4"><b>pkg</b></font>
+│   ├── <font color="#3465A4"><b>config</b></font>
+│   │   ├── config.go
+│   │   ├── db.go
+│   │   └── server.go
+│   ├── <font color="#3465A4"><b>database</b></font>
+│   │   ├── database.go
+│   │   └── migration.go
+│   ├── <font color="#3465A4"><b>helpers</b></font>
+│   │   ├── <font color="#3465A4"><b>pagination</b></font>
+│   │   │   └── pagination.go
+│   │   ├── response.go
+│   │   └── search.go
+│   ├── <font color="#3465A4"><b>logger</b></font>
+│   │   └── logger.go
+│   └── <font color="#3465A4"><b>routers</b></font>
+│       ├── example.go
+│       ├── index.go
+│       ├── <font color="#3465A4"><b>middleware</b></font>
+│       │   └── cors.go
+│       └── router.go
 ├── README.md
-└── <font color="#3465A4"><b>src</b></font>
-    ├── <font color="#3465A4"><b>config</b></font>
-    │   ├── config.go
-    │   ├── db.go
-    │   └── server.go
-    ├── <font color="#3465A4"><b>controllers</b></font>
-    │   ├── controller.go
-    │   └── example_controller.go
-    ├── <font color="#3465A4"><b>database</b></font>
-    │   ├── database.go
-    │   └── migration.go
-    ├── <font color="#3465A4"><b>helpers</b></font>
-    │   ├── <font color="#3465A4"><b>pagination</b></font>
-    │   │   └── pagination.go
-    ├── <font color="#3465A4"><b>logger</b></font>
-    │   └── logger.go
-    ├── <font color="#3465A4"><b>models</b></font>
-    │   └── example_model.go
-    ├── <font color="#3465A4"><b>repository</b></font>
-    │   └── example_repo.go
-    └── <font color="#3465A4"><b>routers</b></font>
-        ├── example.go
-        ├── index.go
-        ├── <font color="#3465A4"><b>middleware</b></font>
-        │   └── cors.go
-        └── router.go
 </pre>
-
 ### Use Packages
 - [Viper](https://github.com/spf13/viper) - Go configuration with fangs.
 - [Gorm](https://github.com/go-gorm/gorm) - The fantastic ORM library for Golang
