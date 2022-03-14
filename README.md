@@ -1,7 +1,27 @@
 # Go Boilerplate
 An API boilerplate written in Golang with Gin Framework
 
-## Motivation
+## Table of Contents
+- [Go Boilerplate](#go-boilerplate)
+  - [Table of Contents](#table-of-contents)
+    - [Motivation](#motivation)
+    - [Configuration Manage](#configuration-manage)
+      - [Server Configuration](#server-configuration)
+      - [Database Configuration](#database-configuration)
+    - [Develop Application in Docker Compose with Live Reload](#develop-application-in-docker-compose-with-live-reload)
+    - [Local Setup Instruction](#local-setup-instruction)
+    - [Routes](#routes)
+    - [Logging](#logging)
+    - [Middlewares](#middlewares)
+    - [Boilerplate structure](#boilerplate-structure)
+    - [Use Packages](#use-packages)
+    - [Code Examples](#code-examples)
+    - [Lets Build a Endpoint](#lets-build-a-endpoint)
+    - [Useful Commands](#useful-commands)
+    - [Container Development Build](#container-development-build)
+    - [Container Production Build and Up](#container-production-build-and-up)
+
+### Motivation
 Write restful API with fast development and developer friendly
 
 ### Configuration Manage
@@ -110,18 +130,6 @@ router.Use(middleware.CORSMiddleware())
 - [Logger](https://github.com/sirupsen/logrus) - Structured, pluggable logging for Go.
 - [Air](https://github.com/cosmtrek/air) - Live reload for Go apps (Docker Development)
 
-### Useful Commands
-
-- `make dev`: make dev for development work
-- `make build`: make build container
-- `make production`: docker production build and up
-- `clean`: clean for all clear docker images
-
-### Container Development Build
-- Run `make build`
-
-### Container Production Build and Up
-- Run `make production`
 
 ### Code Examples
 - [Example](src/examples) contains sample code of different type of example
@@ -215,3 +223,16 @@ func RegisterRoutes(route *gin.Engine, db *gorm.DB) {
 }
 ```
 5. Congratulation, you created a endpoint `0.0.0.0:8000/v1/example/`
+
+### Useful Commands
+
+- `make dev`: make dev for development work
+- `make build`: make build container
+- `make production`: docker production build and up
+- `clean`: clean for all clear docker images
+
+### Container Development Build
+- Run `make build`
+
+### Container Production Build and Up
+- Run `make production`
