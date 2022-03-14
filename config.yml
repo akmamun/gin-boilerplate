@@ -3,7 +3,7 @@ database:
   dbname: "test_pg_go"
   username: "mamun"
   password: "123"
-  host: "localhost" # "0.0.0.0" for local dev
+  host: "postgres_db" # "0.0.0.0" for local dev
   port: "5432"
   log_mode: true
 
