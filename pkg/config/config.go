@@ -1,8 +1,8 @@
 package config
 
 import (
+	"gin-boilerplate/pkg/logger"
 	"github.com/spf13/viper"
-	"pkg/src/logger"
 )
 
 type Configuration struct {

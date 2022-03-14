@@ -1,11 +1,11 @@
 package controllers
 
 import (
+	"gin-boilerplate/models"
+	"gin-boilerplate/pkg/helpers/pagination"
+	"gin-boilerplate/pkg/logger"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"pkg/src/helpers/pagination"
-	"pkg/src/logger"
-	"pkg/src/models"
 	"strconv"
 )
 

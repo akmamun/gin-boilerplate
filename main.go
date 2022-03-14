@@ -1,11 +1,11 @@
 package main
 
 import (
+	"gin-boilerplate/pkg/config"
+	"gin-boilerplate/pkg/database"
+	"gin-boilerplate/pkg/logger"
+	"gin-boilerplate/pkg/routers"
 	"github.com/spf13/viper"
-	"pkg/src/config"
-	"pkg/src/database"
-	"pkg/src/logger"
-	"pkg/src/routers"
 )
 
 func main() {

@@ -1,10 +1,10 @@
 package routers
 
 import (
+	"gin-boilerplate/pkg/routers/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
-	"pkg/src/routers/middleware"
 )
 
 func Routes(db *gorm.DB) *gin.Engine {
