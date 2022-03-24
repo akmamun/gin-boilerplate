@@ -1,4 +1,4 @@
-package models
+package ex_models
 
 //Article table
 type Article struct {

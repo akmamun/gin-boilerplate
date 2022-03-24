@@ -1,7 +1,7 @@
-package controllers
+package ex_controllers
 
 import (
-	"gin-boilerplate/examples/models"
+	"gin-boilerplate/examples/ex_models"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -14,7 +14,7 @@ type SelectedFiledFetch struct {
 
 func (base *Controller) GetSelectedFieldData(ctx *gin.Context) {
 	var selectData []SelectedFiledFetch
-	base.DB.Model(&models.Article{}).Find(&selectData)
+	base.DB.Model(&ex_models.Article{}).Find(&selectData)
 	ctx.JSON(http.StatusOK, selectData)
 
 }

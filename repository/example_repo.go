@@ -6,13 +6,13 @@ package repository
 //	"gorm.io/gorm"
 //	"net/http"
 //	"pkg/src/helpers/pagination"
-//	"pkg/src/models"
+//	"pkg/src/ex_models"
 //	"strconv"
 //)
 //
 //
 //func (db *gorm.DB) GetExamples(ctx *gin.Context) {
-//	var example []models.Example
+//	var example []ex_models.Example
 //
 //	page, _ := strconv.Atoi(ctx.DefaultQuery("page", "1"))
 //	limit, _ := strconv.Atoi(ctx.DefaultQuery("limit", "0"))

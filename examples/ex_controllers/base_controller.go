@@ -1,4 +1,4 @@
-package controllers
+package ex_controllers
 
 import (
 	"gorm.io/gorm"
