@@ -1,9 +1,9 @@
 database:
   driver: "postgres"
-  dbname: "go_pg"
-  username: "dfs"
-  password: "codehard"
-  host: "0.0.0.0" # "0.0.0.0" for local dev
+  dbname: "test_pg_go"
+  username: "mamun"
+  password: "123"
+  host: "postgres_db" # "0.0.0.0" for local dev
   port: "5432"
   log_mode: true
 
