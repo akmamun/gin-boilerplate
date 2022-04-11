@@ -4,20 +4,20 @@ An API boilerplate written in Golang with Gin Framework
 ## Table of Contents
 - [Motivation](#motivation)
 - [Configuration Manage](#configuration-manage)
-- [Server Configuration](#server-configuration)
-- [Database Configuration](#database-configuration)
+  - [Server Configuration](#server-configuration)
+  - [Database Configuration](#database-configuration)
 - [Develop Application in Docker Compose with Live Reload](#develop-application-in-docker-compose-with-live-reload)
 - [Local Setup Instruction](#local-setup-instruction)
 - [Routes](#routes)
 - [Logging](#logging)
 - [Middlewares](#middlewares)
 - [Boilerplate structure](#boilerplate-structure)
-- [Use Packages](#use-packages)
 - [Code Examples](#code-examples)
 - [Lets Build a Endpoint](#lets-build-a-endpoint)
 - [Useful Commands](#useful-commands)
 - [Container Development Build](#container-development-build)
 - [Container Production Build and Up](#container-production-build-and-up)
+- [Use Packages](#use-packages)
 
 ### Motivation
 Write restful API with fast development and developer friendly
@@ -130,6 +130,7 @@ router.Use(middleware.CORSMiddleware())
 
 ### Code Examples
 - [Example](examples) contains sample code of different type of example
+- More Example [gin-boilerplate-examples](https://github.com/akmamun/gin-boilerplate-examples)
 
 ### Lets Build a Endpoint
 
