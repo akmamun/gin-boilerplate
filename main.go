@@ -4,8 +4,7 @@ import (
 	"gin-boilerplate/pkg/config"
 	"gin-boilerplate/pkg/database"
 	"gin-boilerplate/pkg/logger"
-	"gin-boilerplate/pkg/routers"
-	"github.com/spf13/viper"
+	"gin-boilerplate/routers"
 )
 
 func main() {
@@ -20,9 +19,6 @@ func main() {
 	db := database.GetDB()
 	router := routers.Routes(db)
 
-	viper.SetDefault("server.host", "0.0.0.0")
-	viper.SetDefault("server.port", "8000")
-
-	logger.Fatalf("%v:%v", router.Run(viper.GetString("server.host")+":"+viper.GetString("server.port")))
+	logger.Fatalf("%v", router.Run(config.ServerConfig()))
 
 }

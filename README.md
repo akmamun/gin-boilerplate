@@ -1,19 +1,20 @@
 # Go Boilerplate
-An API boilerplate written in Golang with Gin Framework
+An API boilerplate written in Golang with Gin Framework and Gorm
 
 ## Table of Contents
 - [Motivation](#motivation)
 - [Configuration Manage](#configuration-manage)
+  - [ENV Manage](#env-manage)
   - [Server Configuration](#server-configuration)
   - [Database Configuration](#database-configuration)
 - [Develop Application in Docker Compose with Live Reload](#develop-application-in-docker-compose-with-live-reload)
 - [Local Setup Instruction](#local-setup-instruction)
 - [Routes](#routes)
-- [Middlewares](#middlewares)
 - [Logging](#logging)
-- [Boilerplate Structure](#boilerplate-structure)
-- [Let's Build an API](#lets-build-an-api)
+- [Middlewares](#middlewares)
+- [Boilerplate structure](#boilerplate-structure)
 - [Code Examples](#code-examples)
+- [Lets Build a Endpoint](#lets-build-a-endpoint)
 - [Useful Commands](#useful-commands)
 - [Container Development Build](#container-development-build)
 - [Container Production Build and Up](#container-production-build-and-up)
@@ -23,8 +24,9 @@ An API boilerplate written in Golang with Gin Framework
 Write restful API with fast development and developer friendly
 
 ### Configuration Manage
-- Manage from [config.yml](config.yml) file
-- Use [Gin](https://github.com/gin-gonic/gin) Web Framework
+#### ENV Manage
+- Env Manage from [config.yml](config.yml) file
+- If Manage from env file add env file add configure
 - Server `environment` is Gin debug logger, use `prod` in production and `dev` in development mode
 
 #### Server Configuration
@@ -70,6 +72,10 @@ Follow these steps:
 ### Routes
 - The application available and check health on [0.0.0.0:8000/health](http://0.0.0.0:8000/health)
 
+### Logging
+- Use [logrus](https://github.com/sirupsen/logrus) - Structured, pluggable logging for Go.
+- `INFO 2022-03-12T00:33:32+03:00 Server is starting at 127.0.0.1:8000`
+
 ### Middlewares
 - Use Gin CORSMiddleware
 ```go
@@ -78,10 +84,6 @@ router.Use(gin.Logger())
 router.Use(gin.Recovery())
 router.Use(middleware.CORSMiddleware())
 ```
-### Logging
-- Use [logrus](https://github.com/sirupsen/logrus) - Structured, pluggable logging for Go.
-- `INFO 2022-03-12T00:33:32+03:00 Server is starting at 127.0.0.1:8000`
-
 ### Boilerplate Structure
 <pre>├── config.yml
 ├── <font color="#3465A4"><b>controllers</b></font>
@@ -121,8 +123,18 @@ router.Use(middleware.CORSMiddleware())
 │       └── router.go
 ├── README.md
 </pre>
+### Use Packages
+- [Viper](https://github.com/spf13/viper) - Go configuration with fangs.
+- [Gorm](https://github.com/go-gorm/gorm) - The fantastic ORM library for Golang
+- [Logger](https://github.com/sirupsen/logrus) - Structured, pluggable logging for Go.
+- [Air](https://github.com/cosmtrek/air) - Live reload for Go apps (Docker Development)
 
-### Lets Build an API
+
+### Code Examples
+- [Example](examples) contains sample code of different type of example
+- More Example [gin-boilerplate-examples](https://github.com/akmamun/gin-boilerplate-examples)
+
+### Lets Build a Endpoint
 
 1. [models](models) folder add a new file name `example_model.go`
 
@@ -189,7 +201,7 @@ func (base *Controller) CreateExample(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, &example)
 }
 ```
-4. [routers](pkg/routers) folder add a file `example.go`
+4. [routers](routers) folder add a file `example.go`
 ```go
 package routers
 
@@ -206,7 +218,7 @@ func TestRoutes(route *gin.Engine, db *gorm.DB) {
 	v1.POST("/example/", ctrl.CreateExample)
 }
 ```
-5. Finally, register routes to [index.go](pkg/routers/index.go)
+5. Finally, register routes to [index.go](routers/index.go)
 ```go
 package routers
 
@@ -222,10 +234,7 @@ func RegisterRoutes(route *gin.Engine, db *gorm.DB) {
 	TestRoutes(route, db)
 }
 ```
-- Congratulation, your endpoint is ready `0.0.0.0:8000/v1/example/`
-
-### Code Examples
-- [Example](examples) contains sample code of different type of example
+- Congratulation, your endpoint created `0.0.0.0:8000/v1/example/`
 
 ### Useful Commands
 
@@ -239,9 +248,3 @@ func RegisterRoutes(route *gin.Engine, db *gorm.DB) {
 
 ### Container Production Build and Up
 - Run `make production`
-
-### Use Packages
-- [Viper](https://github.com/spf13/viper) - Go configuration with fangs.
-- [Gorm](https://github.com/go-gorm/gorm) - The fantastic ORM library for Golang
-- [Logger](https://github.com/sirupsen/logrus) - Structured, pluggable logging for Go.
-- [Air](https://github.com/cosmtrek/air) - Live reload for Go apps (Docker Development)

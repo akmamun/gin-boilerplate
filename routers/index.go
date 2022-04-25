@@ -1,7 +1,6 @@
 package routers
 
 import (
-	exmpRoutes "gin-boilerplate/examples/ex_routes"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"net/http"
@@ -15,6 +14,5 @@ func RegisterRoutes(route *gin.Engine, db *gorm.DB) {
 	route.GET("/health", func(ctx *gin.Context) { ctx.JSON(http.StatusOK, gin.H{"live": "ok"}) })
 
 	//Add All route
-	TestRoutes(route, db)
-	exmpRoutes.ExamplesRoutes(route, db)
+	//TestRoutes(route, db)
 }
