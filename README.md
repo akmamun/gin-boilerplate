@@ -26,16 +26,17 @@ Write restful API with fast development and developer friendly
 ### Configuration Manage
 #### ENV Manage
 - Env Manage from [config.yml](config.yml) file
-- If Manage from env file add env file add configure
-- Server `environment` is Gin debug logger, use `prod` in production and `dev` in development mode
+- If Manage from .env file add .env file add configure [Server Config](pkg/config/server.go) and [Db Config](pkg/config/db.go)  
 
 #### Server Configuration
+- Use [Gin](https://github.com/gin-gonic/gin) Web Framework
+- Server `environment` is Gin debug logger, use `prod` in production and `debug` in development mode
 ```yaml
 server:
   host: "0.0.0.0"
   port: "8000"
   secret: "secret"
-  environment: "dev" #debug logger ,use `prod` in production
+  environment: "debug" #debug logger ,use `prod` in production
   request:
     timeout: 100
 ```

@@ -12,7 +12,7 @@ server:
   port: "8000"
   secret: "secret"
   allow_hosts: "localhost"
-  environment: "dev" #prod
+  environment: "debug" #use `debug` for development and `prod` for production
   request:
     timeout: 100
 
