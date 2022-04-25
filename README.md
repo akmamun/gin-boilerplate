@@ -43,7 +43,7 @@ server:
 
 #### Database Configuration
 - Use [GORM](https://github.com/go-gorm/gorm) as an ORM. you just need to configure config.yml file according to your setup.
-- Use database `host` as `localhost` for local development, if docker use `postgres_db`
+- Use database `host` value as `localhost` for local development, and use `postgres_db` for docker development 
 - Database `log_mode` is SQL logger, `false` in production and `true` in development mode
 ```yaml
 database:
@@ -51,7 +51,7 @@ database:
   dbname: "test_pg_go"
   username: "mamun"
   password: "123"
-  host: "postgres_db" # use "localhost" for local development, `postgres_db` for docker
+  host: "localhost" # use "postgres_db" for docker development
   port: "5432"
   log_mode: true # SQL logger , false in production
 
