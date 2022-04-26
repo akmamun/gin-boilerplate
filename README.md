@@ -26,8 +26,27 @@ Write restful API with fast development and developer friendly
 ### Configuration Manage
 #### ENV Manage
 - Env Manage from [config.yml](config.yml) file
-- If Manage from .env file add .env file add configure [Server Config](pkg/config/server.go) and [Db Config](pkg/config/db.go)  
+- If ENV Manage from .env file, create .env and add configure in the file  
+```text
+# Server Configuration
+SECRET=h9wt*pasj6796j##w(w8=xaje8tpi6h*r&hzgrz065u&ed+k2)
+DEBUG=True
+ALLOWED_HOSTS=127.0.0.1,localhost,*
 
+# Database Configuration	
+MASTER_DB_NAME=test_pg_go
+MASTER_DB_USER=mamun
+MASTER_DB_HOST=postgres_db
+MASTER_DB_PORT=5432
+MASTER_DB_PASSWORD=123
+MASTER_DB_OPTIONS=sslmode=disable
+
+```
+- [Server Config](pkg/config/server.go)
+- ```go
+
+```
+- [Db Config](pkg/config/db.go)
 #### Server Configuration
 - Use [Gin](https://github.com/gin-gonic/gin) Web Framework
 - Server `environment` is Gin debug logger, use `prod` in production and `debug` in development mode
