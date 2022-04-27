@@ -1,5 +1,9 @@
 package config
 
+import (
+	"fmt"
+)
+
 
 type DatabaseConfiguration struct {
 	Driver   string
@@ -19,10 +23,12 @@ func DbConfiguration() string {
 	// port := viper.GetString("database.port")
 	// sslMode := viper.GetString("database.sslmode")
 
-	// dsn := fmt.Sprintf(
-	// 	"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
-	// 	host, username, password, dbname, port, sslMode,
-	// )
-	dns := "mamun:123@192.168.10.160:5432/test_pg_go?charset=utf8"
-	return dns
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+		"192.168.10.160", "mamun", "123", "test_pg_go", "5432", "disable",
+	)
+	fmt.Println("######################################################")
+	fmt.Println(dsn)
+	// dns := "mamun:123@192.168.10.160:5432/test_pg_go?charset=utf8"
+	return dsn
 }

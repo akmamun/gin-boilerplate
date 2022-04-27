@@ -20,7 +20,7 @@ type Database struct {
 
 // Connection create database connection
 func Connection() error {
-	var db = DB
+	DB = orm.NewOrm()
 	
 	l := logs.GetLogger()
 	l.Println("this is a message of http")
@@ -42,14 +42,13 @@ func Connection() error {
 	// 	log.Println("Db connection error")
 	// 	return err
 	// }
-	err = orm.RunSyncdb("default", true, true)
 
 	// err = db.AutoMigrate(migrationModels...)
+	
 
 	if err != nil {
 		return err
 	}
-	DB = db
 
 	return nil
 
@@ -57,9 +56,12 @@ func Connection() error {
 
 func init() {
 	dsn := config.DbConfiguration()
+	orm.RegisterModel(migrationModels...)
 	orm.RegisterDriver("postgres", orm.DRPostgres)
 
 	orm.RegisterDataBase("default", "postgres", dsn)
+	orm.RunSyncdb("default", false, true)
+
 }
 
 // GetDB connection
