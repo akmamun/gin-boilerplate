@@ -21,7 +21,7 @@ func DbConfiguration() string {
 	password := viper.GetString("database.password")
 	host := viper.GetString("database.host")
 	port := viper.GetString("database.port")
-	sslMode := viper.GetString("database.sslmode")
+	sslMode := viper.GetString("database.ssl_mode")
 
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",

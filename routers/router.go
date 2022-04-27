@@ -9,14 +9,14 @@ import (
 
 func Routes(db *gorm.DB) *gin.Engine {
 
-	environment := viper.Get("server.environment")
-	if environment == "prod" {
-		gin.SetMode(gin.ReleaseMode)
-	} else {
+	environment := viper.GetBool("server.debug")
+	if environment {
 		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
 	}
-	allowHosts := viper.GetString("server.allow_hosts")
 
+	allowHosts := viper.GetString("server.allow_hosts")
 	router := gin.New()
 	router.SetTrustedProxies([]string{allowHosts})
 	router.Use(gin.Logger())
