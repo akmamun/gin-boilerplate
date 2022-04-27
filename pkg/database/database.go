@@ -20,6 +20,12 @@ type Database struct {
 
 // Connection create database connection
 func Connection() error {
+	dsn := config.DbConfiguration()
+	orm.RegisterModel(migrationModels...)
+	orm.RegisterDriver("postgres", orm.DRPostgres)
+
+	orm.RegisterDataBase("default", "postgres", dsn)
+	orm.RunSyncdb("default", false, true)
 	DB = orm.NewOrm()
 	
 	l := logs.GetLogger()
@@ -33,19 +39,6 @@ func Connection() error {
 	logs.Error(1024, "is a very", "good game")
 	logs.Critical("oh,crash")
 	
-	// db, err = orm.Open(postgres.Open(dsn), &gorm.Config{
-		// 	Logger: logger.Default.LogMode(loglevel),
-		// })
-
-	// if err != nil {
-	// 	DBErr = err
-	// 	log.Println("Db connection error")
-	// 	return err
-	// }
-
-	// err = db.AutoMigrate(migrationModels...)
-	
-
 	if err != nil {
 		return err
 	}
@@ -54,15 +47,6 @@ func Connection() error {
 
 }
 
-func init() {
-	dsn := config.DbConfiguration()
-	orm.RegisterModel(migrationModels...)
-	orm.RegisterDriver("postgres", orm.DRPostgres)
-
-	orm.RegisterDataBase("default", "postgres", dsn)
-	orm.RunSyncdb("default", false, true)
-
-}
 
 // GetDB connection
 func GetDB() (orm.Ormer) {
