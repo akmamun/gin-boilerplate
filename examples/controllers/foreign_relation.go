@@ -9,7 +9,7 @@ import (
 // GetNormalData get normal data if added pagination see example_controller
 func (base *Controller) GetNormalData(ctx *gin.Context) {
 	var categories []models.Category
-	base.DB.Find(&categories)
+	base.DB.Read(&categories)
 	ctx.JSON(http.StatusOK, gin.H{"data": categories})
 
 }
