@@ -2,12 +2,13 @@ package routers
 
 import (
 	"gin-boilerplate/pkg/routers/middleware"
+
+	"github.com/beego/beego/v2/client/orm"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"gorm.io/gorm"
 )
 
-func Routes(db *gorm.DB) *gin.Engine {
+func Routes(db orm.Ormer) *gin.Engine {
 
 	environment := viper.Get("server.environment")
 	if environment == "prod" {

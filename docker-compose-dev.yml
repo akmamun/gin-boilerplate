@@ -8,6 +8,8 @@ services:
       - POSTGRES_DB=test_pg_go
       - POSTGRES_USER=mamun
       - POSTGRES_PASSWORD=123
+    ports:
+      - "5432:5432"
     restart: always
 
 

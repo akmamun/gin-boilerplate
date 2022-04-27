@@ -3,8 +3,9 @@ package controllers
 import (
 	"gin-boilerplate/models"
 	"gin-boilerplate/pkg/logger"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func (base *Controller) CreateExample(ctx *gin.Context) {
@@ -16,7 +17,7 @@ func (base *Controller) CreateExample(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	err = base.DB.Create(&example).Error
+	_,err = base.DB.Insert(&example)
 	if err != nil {
 		logger.Errorf("error: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
