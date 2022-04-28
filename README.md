@@ -25,28 +25,54 @@ Write restful API with fast development and developer friendly
 
 ### Configuration Manage
 #### ENV Manage
-- Env Manage from [config.yml](config.yml) file
-- If ENV Manage from .env file, create .env and add configure in the file  
-```text
-# Server Configuration
-SECRET=h9wt*pasj6796j##w(w8=xaje8tpi6h*r&hzgrz065u&ed+k2)
-DEBUG=True
-ALLOWED_HOSTS=127.0.0.1,localhost,*
 
-# Database Configuration	
-MASTER_DB_NAME=test_pg_go
-MASTER_DB_USER=mamun
-MASTER_DB_HOST=postgres_db
-MASTER_DB_PORT=5432
-MASTER_DB_PASSWORD=123
-MASTER_DB_OPTIONS=sslmode=disable
+- ENV Configuration Manage from .env file, sample file .env.example
+- IF ENV Manage from YAML file add a config.yml file and configuration [db.go](pkg/config/db.go) and [server.go](pkg/config/server.go)
+```yaml
+database:
+  driver: "postgres"
+  dbname: "test_pg_go"
+  username: "mamun"
+  password: "123"
+  host: "postgres_db" # use `localhost` for local development
+  port: "5432"
+  ssl_mode: disable
+  log_mode: false
 
+server:
+  host: "0.0.0.0"
+  port: "8000"
+  secret: "secret"
+  allow_hosts: "localhost"
+  debug: false #use `false` in production
+  request:
+    timeout: 100
 ```
 - [Server Config](pkg/config/server.go)
-- ```go
-
+```go
+func ServerConfig() string {
+viper.SetDefault("server.host", "0.0.0.0")
+viper.SetDefault("server.port", "8000")
+appServer := fmt.Sprintf("%s:%s", viper.GetString("server.host"), viper.GetString("server.port"))
+return appServer
+}
 ```
 - [Db Config](pkg/config/db.go)
+```go
+func DbConfiguration() string {
+	
+dbname := viper.GetString("database.dbname")
+username := viper.GetString("database.username")
+password := viper.GetString("database.password")
+host := viper.GetString("database.host")
+port := viper.GetString("database.port")
+sslMode := viper.GetString("database.ssl_mode")
+
+dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+host, username, password, dbname, port, sslMode)
+return dsn
+}
+```
 #### Server Configuration
 - Use [Gin](https://github.com/gin-gonic/gin) Web Framework
 - Server `environment` is Gin debug logger, use `prod` in production and `debug` in development mode
