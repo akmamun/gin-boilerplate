@@ -19,6 +19,7 @@ An API boilerplate written in Golang with Gin Framework and Gorm
 - [Container Development Build](#container-development-build)
 - [Container Production Build and Up](#container-production-build-and-up)
 - [Use Packages](#use-packages)
+- [ENV YAML Configure](#env-yaml-configure)
 
 ### Motivation
 Write restful API with fast development and developer friendly
@@ -26,81 +27,16 @@ Write restful API with fast development and developer friendly
 ### Configuration Manage
 #### ENV Manage
 
-- ENV Configuration Manage from .env file, sample file .env.example
-- IF ENV Manage from YAML file add a config.yml file and configuration [db.go](pkg/config/db.go) and [server.go](pkg/config/server.go)
-```yaml
-database:
-  driver: "postgres"
-  dbname: "test_pg_go"
-  username: "mamun"
-  password: "123"
-  host: "postgres_db" # use `localhost` for local development
-  port: "5432"
-  ssl_mode: disable
-  log_mode: false
+- By Default ENV Configuration Manage from `.env`. sample file `.env.example`
+- If ENV Manage from YAML file add a config.yml file and configuration [db.go](pkg/config/db.go) and [server.go](pkg/config/server.go). See More [ENV YAML Configure](#env-yaml-configure)
 
-server:
-  host: "0.0.0.0"
-  port: "8000"
-  secret: "secret"
-  allow_hosts: "localhost"
-  debug: false #use `false` in production
-  request:
-    timeout: 100
-```
-- [Server Config](pkg/config/server.go)
-```go
-func ServerConfig() string {
-viper.SetDefault("server.host", "0.0.0.0")
-viper.SetDefault("server.port", "8000")
-appServer := fmt.Sprintf("%s:%s", viper.GetString("server.host"), viper.GetString("server.port"))
-return appServer
-}
-```
-- [Db Config](pkg/config/db.go)
-```go
-func DbConfiguration() string {
-	
-dbname := viper.GetString("database.dbname")
-username := viper.GetString("database.username")
-password := viper.GetString("database.password")
-host := viper.GetString("database.host")
-port := viper.GetString("database.port")
-sslMode := viper.GetString("database.ssl_mode")
-
-dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
-host, username, password, dbname, port, sslMode)
-return dsn
-}
-```
 #### Server Configuration
 - Use [Gin](https://github.com/gin-gonic/gin) Web Framework
-- Server `environment` is Gin debug logger, use `prod` in production and `debug` in development mode
-```yaml
-server:
-  host: "0.0.0.0"
-  port: "8000"
-  secret: "secret"
-  environment: "debug" #debug logger ,use `prod` in production
-  request:
-    timeout: 100
-```
 
 #### Database Configuration
 - Use [GORM](https://github.com/go-gorm/gorm) as an ORM. you just need to configure config.yml file according to your setup.
 - Use database `host` value as `localhost` for local development, and use `postgres_db` for docker development 
 - Database `log_mode` is SQL logger, `false` in production and `true` in development mode
-```yaml
-database:
-  driver: "postgres"
-  dbname: "test_pg_go"
-  username: "mamun"
-  password: "123"
-  host: "localhost" # use "postgres_db" for docker development
-  port: "5432"
-  log_mode: true # SQL logger , false in production
-
-```
 
 ### Develop Application in Docker Compose with Live Reload
 Follow these steps:
@@ -294,3 +230,50 @@ func RegisterRoutes(route *gin.Engine, db *gorm.DB) {
 
 ### Container Production Build and Up
 - Run `make production`
+
+#### ENV Yaml Configure
+```yaml
+database:
+  driver: "postgres"
+  dbname: "test_pg_go"
+  username: "mamun"
+  password: "123"
+  host: "postgres_db" # use `localhost` for local development
+  port: "5432"
+  ssl_mode: disable
+  log_mode: false
+
+server:
+  host: "0.0.0.0"
+  port: "8000"
+  secret: "secret"
+  allow_hosts: "localhost"
+  debug: false #use `false` in production
+  request:
+    timeout: 100
+```
+- [Server Config](pkg/config/server.go)
+```go
+func ServerConfig() string {
+viper.SetDefault("server.host", "0.0.0.0")
+viper.SetDefault("server.port", "8000")
+appServer := fmt.Sprintf("%s:%s", viper.GetString("server.host"), viper.GetString("server.port"))
+return appServer
+}
+```
+- [DB Config](pkg/config/db.go)
+```go
+func DbConfiguration() string {
+	
+dbname := viper.GetString("database.dbname")
+username := viper.GetString("database.username")
+password := viper.GetString("database.password")
+host := viper.GetString("database.host")
+port := viper.GetString("database.port")
+sslMode := viper.GetString("database.ssl_mode")
+
+dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+host, username, password, dbname, port, sslMode)
+return dsn
+}
+```
