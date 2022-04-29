@@ -4,7 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Controller struct {
+type BaseController struct {
 	//rep repository.Repository
 	DB *gorm.DB
 }

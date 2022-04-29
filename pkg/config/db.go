@@ -15,17 +15,29 @@ type DatabaseConfiguration struct {
 	LogMode  bool
 }
 
-func DbConfiguration() string {
-	dbname := viper.GetString("database.dbname")
-	username := viper.GetString("database.username")
-	password := viper.GetString("database.password")
-	host := viper.GetString("database.host")
-	port := viper.GetString("database.port")
-	sslMode := viper.GetString("database.sslmode")
+func DbConfiguration() (string, string) {
+	masterDBName := viper.GetString("MASTER_DB_NAME")
+	masterDBUser := viper.GetString("MASTER_DB_USER")
+	masterDBPassword := viper.GetString("MASTER_DB_PASSWORD")
+	masterDBHost := viper.GetString("MASTER_DB_HOST")
+	masterDBPort := viper.GetString("MASTER_DB_PORT")
+	masterDBSslMode := viper.GetString("MASTER_SSL_MODE")
 
-	dsn := fmt.Sprintf(
+	replicaDBName := viper.GetString("REPLICA_DB_NAME")
+	replicaDBUser := viper.GetString("REPLICA_DB_USER")
+	replicaDBPassword := viper.GetString("REPLICA_DB_PASSWORD")
+	replicaDBHost := viper.GetString("REPLICA_DB_HOST")
+	replicaDBPort := viper.GetString("REPLICA_DB_PORT")
+	replicaDBSslMode := viper.GetString("REPLICA_SSL_MODE")
+
+	masterDBDSN := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
-		host, username, password, dbname, port, sslMode,
+		masterDBHost, masterDBUser, masterDBPassword, masterDBName, masterDBPort, masterDBSslMode,
 	)
-	return dsn
+
+	replicaDBDSN := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+		replicaDBHost, replicaDBUser, replicaDBPassword, replicaDBName, replicaDBPort, replicaDBSslMode,
+	)
+	return masterDBDSN, replicaDBDSN
 }
