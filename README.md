@@ -30,23 +30,33 @@ Write restful API with fast development and developer friendly
 #### ENV Manage
 
 - Default ENV Configuration Manage from `.env`. sample file `.env.example`
-- Server `DEBUG` and Database `LOG_MODE` is SQL logger, both `False` in production
 ```text
-# Server Config
+# Server Configuration
 SECRET=h9wt*pasj6796j##w(w8=xaje8tpi6h*r&hzgrz065u&ed+k2)
 DEBUG=True # `False` in Production
-ALLOWED_HOSTS=*
-HOST=0.0.0.0
-PORT=8001
+ALLOWED_HOSTS=0.0.0.0
+SERVER_HOST=0.0.0.0
+SERVER_PORT=8000
 
-# Database Config
+# Database Configuration
 MASTER_DB_NAME=test_pg_go
-MASTER_DB_USER=test
+MASTER_DB_USER=mamun
 MASTER_DB_PASSWORD=123
 MASTER_DB_HOST=postgres_db
 MASTER_DB_PORT=5432
-LOG_MODE=True # `False` in Production
+MASTER_DB_LOG_MODE=True # `False` in Production
+MASTER_SSL_MODE=disable
+
+REPLICA_DB_NAME=test_pg_go
+REPLICA_DB_USER=mamun
+REPLICA_DB_PASSWORD=123
+REPLICA_DB_HOST=localhost
+REPLICA_DB_PORT=5432
+REPLICA_DB_LOG_MODE=True # `False` in Production
+REPLICA_SSL_MODE=disable
 ```
+- Server `DEBUG` Set `False` in Production
+- Database Logger `MASTER_DB_LOG_MODE` and `REPLICA_DB_LOG_MODE`  Set `False` in production
 - If ENV Manage from YAML file add a config.yml file and configuration [db.go](pkg/config/db.go) and [server.go](pkg/config/server.go). See More [ENV YAML Configure](#env-yaml-configure)
 
 #### Server Configuration
