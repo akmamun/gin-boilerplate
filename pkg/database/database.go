@@ -59,7 +59,6 @@ func Connection() error {
 	DB = db
 
 	return nil
-
 }
 
 // GetDB connection
