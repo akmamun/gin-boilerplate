@@ -55,8 +55,8 @@ REPLICA_DB_PORT=5432
 REPLICA_DB_LOG_MODE=True # `False` in Production
 REPLICA_SSL_MODE=disable
 ```
-- Server `DEBUG` Set `False` in Production
-- Database Logger `MASTER_DB_LOG_MODE` and `REPLICA_DB_LOG_MODE`  Set `False` in production
+- Server `DEBUG` set `False` in Production
+- Database Logger `MASTER_DB_LOG_MODE` and `REPLICA_DB_LOG_MODE`  set `False` in production
 - If ENV Manage from YAML file add a config.yml file and configuration [db.go](pkg/config/db.go) and [server.go](pkg/config/server.go). See More [ENV YAML Configure](#env-yaml-configure)
 
 #### Server Configuration
@@ -64,7 +64,7 @@ REPLICA_SSL_MODE=disable
 
 #### Database Configuration
 - Use [GORM](https://github.com/go-gorm/gorm) as an ORM. you just need to configure config.yml file according to your setup.
-- Use database `MASTER_DB_HOST` value as `localhost` for local development, and use `postgres_db` for docker development 
+- Use database `MASTER_DB_HOST` value set as `localhost` for local development, and use `postgres_db` for docker development 
 
 ### Installation
 #### Local Setup Instruction
@@ -78,7 +78,7 @@ Follow these steps:
 - Make sure install the latest version of docker and docker-compose
 - Docker Installation for your desire OS https://docs.docker.com/engine/install/ubuntu/
 - Docker Composer Installation https://docs.docker.com/compose/install/
-- Run `make dev`
+- Run and Develop `make dev`
 
 ### Routes
 - The application available and check health on [0.0.0.0:8000/health](http://0.0.0.0:8000/health)
@@ -95,8 +95,7 @@ router.Use(middleware.CORSMiddleware())
 - `INFO 2022-03-12T00:33:32+03:00 Server is starting at 0.0.0.0:8000`
 
 ### Boilerplate Structure
-<pre>├── config.yml
-├── <font color="#3465A4"><b>controllers</b></font>
+<pre>├── <font color="#3465A4"><b>controllers</b></font>
 │   └── base_controller.go
 ├── docker-compose-dev.yml
 ├── docker-compose-prod.yml
@@ -133,7 +132,6 @@ router.Use(middleware.CORSMiddleware())
     │   └── cors.go
     └── router.go
 </pre>
-
 ### Examples
 - More Example [gin-boilerplate-examples](https://github.com/akmamun/gin-boilerplate-examples)
 
