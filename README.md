@@ -7,8 +7,9 @@ An API boilerplate written in Golang with Gin Framework and Gorm
   - [ENV Manage](#env-manage)
   - [Server Configuration](#server-configuration)
   - [Database Configuration](#database-configuration)
-- [Develop Application in Docker Compose with Live Reload](#develop-application-in-docker-compose-with-live-reload)
-- [Local Setup Instruction](#local-setup-instruction)
+- [Installation](#installation)
+  - [Local Setup Instruction](#local-setup-instruction)
+  - [Develop Application in Docker with Live Reload](#develop-application-in-docker-with-live-reload)
 - [Routes](#routes)
 - [Logging](#logging)
 - [Middlewares](#middlewares)
@@ -27,7 +28,24 @@ Write restful API with fast development and developer friendly
 ### Configuration Manage
 #### ENV Manage
 
-- By Default ENV Configuration Manage from `.env`. sample file `.env.example`
+- Default ENV Configuration Manage from `.env`. sample file `.env.example`
+- Server `DEBUG` and Database `LOG_MODE` is SQL logger, both `False` in production
+```text
+# Server Config
+SECRET=h9wt*pasj6796j##w(w8=xaje8tpi6h*r&hzgrz065u&ed+k2)
+DEBUG=True # `False` in Production
+ALLOWED_HOSTS=*
+HOST=0.0.0.0
+PORT=8001
+
+# Database Config
+MASTER_DB_NAME=test_pg_go
+MASTER_DB_USER=test
+MASTER_DB_PASSWORD=123
+MASTER_DB_HOST=postgres_db
+MASTER_DB_PORT=5432
+LOG_MODE=True # `False` in Production
+```
 - If ENV Manage from YAML file add a config.yml file and configuration [db.go](pkg/config/db.go) and [server.go](pkg/config/server.go). See More [ENV YAML Configure](#env-yaml-configure)
 
 #### Server Configuration
@@ -35,21 +53,22 @@ Write restful API with fast development and developer friendly
 
 #### Database Configuration
 - Use [GORM](https://github.com/go-gorm/gorm) as an ORM. you just need to configure config.yml file according to your setup.
-- Use database `host` value as `localhost` for local development, and use `postgres_db` for docker development 
-- Database `log_mode` is SQL logger, `false` in production and `true` in development mode
+- Use database `MASTER_DB_HOST` value as `localhost` for local development, and use `postgres_db` for docker development 
 
-### Develop Application in Docker Compose with Live Reload
+### Installation
+#### Local Setup Instruction
+Follow these steps:
+- Copy [.env.example](.env.example) as .env and configure necessary values
+- To add all dependencies for a package in your module `go get .` in the current directory
+- Locally run `go run main.go` or `go build main.go` and run `./main`
+
+#### Develop Application in Docker with Live Reload
 Follow these steps:
 - Make sure install the latest version of docker and docker-compose
 - Docker Installation for your desire OS https://docs.docker.com/engine/install/ubuntu/
 - Docker Composer Installation https://docs.docker.com/compose/install/
 - Run `make dev`
 
-### Local Setup Instruction
-Follow these steps:
-- Configuration manage from [config.yml](config.yml) file
-- To add all dependencies for a package in your module `go get .` in the current directory
-- Locally run `go run main.go` or `go build main.go` and run `./main`
 
 ### Routes
 - The application available and check health on [0.0.0.0:8000/health](http://0.0.0.0:8000/health)
