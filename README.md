@@ -10,10 +10,8 @@ An API boilerplate written in Golang with Gin Framework and Gorm
 - [Installation](#installation)
   - [Local Setup Instruction](#local-setup-instruction)
   - [Develop Application in Docker with Live Reload](#develop-application-in-docker-with-live-reload)
-- [Routes](#routes)
 - [Middlewares](#middlewares)
-- [Logging](#logger)
-- [Boilerplate structure](#boilerplate-structure)
+- [Boilerplate Structure](#boilerplate-structure)
 - [Code Examples](#examples)
 - [Let's Build an API](#lets-build-an-api)
 - [Deployment](#deployment)
@@ -72,6 +70,7 @@ Follow these steps:
 - Copy [.env.example](.env.example) as .env and configure necessary values
 - To add all dependencies for a package in your module `go get .` in the current directory
 - Locally run `go run main.go` or `go build main.go` and run `./main`
+- Check Application health available on [0.0.0.0:8000/health](http://0.0.0.0:8000/health)
 
 #### Develop Application in Docker with Live Reload
 Follow these steps:
@@ -79,9 +78,8 @@ Follow these steps:
 - Docker Installation for your desire OS https://docs.docker.com/engine/install/ubuntu/
 - Docker Composer Installation https://docs.docker.com/compose/install/
 - Run and Develop `make dev`
+- Check Application health available on [0.0.0.0:8000/health](http://0.0.0.0:8000/health)
 
-### Routes
-- The application available and check health on [0.0.0.0:8000/health](http://0.0.0.0:8000/health)
 ### Middlewares
 - Use Gin CORSMiddleware
 ```go
@@ -90,9 +88,6 @@ router.Use(gin.Logger())
 router.Use(gin.Recovery())
 router.Use(middleware.CORSMiddleware())
 ```
-### Logger
-- Use [logrus](https://github.com/sirupsen/logrus) - Structured, pluggable logging for Go.
-- `INFO 2022-03-12T00:33:32+03:00 Server is starting at 0.0.0.0:8000`
 
 ### Boilerplate Structure
 <pre>├── <font color="#3465A4"><b>controllers</b></font>
