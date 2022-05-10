@@ -2,67 +2,55 @@ package database
 
 import (
 	"gin-boilerplate/pkg/config"
-	"github.com/spf13/viper"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
-	"gorm.io/plugin/dbresolver"
-	"log"
+
+	"github.com/beego/beego/v2/client/orm"
+	"github.com/beego/beego/v2/core/logs"
+	_ "github.com/lib/pq"
 )
 
 var (
-	DB    *gorm.DB
+	DB    orm.Ormer
 	err   error
 	DBErr error
 )
 
 type Database struct {
-	*gorm.DB
+	orm.Ormer
 }
 
 // Connection create database connection
 func Connection() error {
-	var db = DB
-	masterDSN, replicaDSN := config.DbConfiguration()
+	dsn := config.DbConfiguration()
+	orm.RegisterModel(migrationModels...)
+	orm.RegisterDriver("postgres", orm.DRPostgres)
 
-	logMode := viper.GetBool("DB_LOG_MODE")
-	debug := viper.GetBool("DEBUG")
-
-	loglevel := logger.Silent
-	if logMode {
-		loglevel = logger.Info
-	}
-
-	db, err = gorm.Open(postgres.Open(masterDSN), &gorm.Config{
-		Logger: logger.Default.LogMode(loglevel),
-	})
-	if !debug {
-		db.Use(dbresolver.Register(dbresolver.Config{
-			Replicas: []gorm.Dialector{
-				postgres.Open(replicaDSN),
-			},
-			Policy: dbresolver.RandomPolicy{},
-		}))
-	}
-
-	if err != nil {
-		DBErr = err
-		log.Println("Db connection error")
-		return err
-	}
-
-	err = db.AutoMigrate(migrationModels...)
-
+	orm.RegisterDataBase("default", "postgres", dsn)
+	orm.RunSyncdb("default", false, true)
+	DB = orm.NewOrm()
+	
+	l := logs.GetLogger()
+	l.Println("this is a message of http")
+	//an official log.Logger with prefix ORM
+	logs.GetLogger("ORM").Println("this is a message of orm")
+	
+    logs.Debug("my book is bought in the year of ", 2016)
+	logs.Info("this %s cat is %v years old", "yellow", 3)
+	logs.Warn("json is a type of kv like", map[string]int{"key": 2016})
+	logs.Error(1024, "is a very", "good game")
+	logs.Critical("oh,crash")
+	
 	if err != nil {
 		return err
 	}
-	DB = db
 
 	return nil
+
 }
 
+
 // GetDB connection
-func GetDB() *gorm.DB {
+func GetDB() (orm.Ormer) {
+	// db,_:= orm.GetDB()
 	return DB
 }
 
