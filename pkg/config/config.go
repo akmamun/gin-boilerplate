@@ -14,10 +14,7 @@ type Configuration struct {
 func SetupConfig() error {
 	var configuration *Configuration
 
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
-
+	viper.SetConfigFile(".env")
 	if err := viper.ReadInConfig(); err != nil {
 		logger.Errorf("Error to reading config file, %s", err)
 		return err

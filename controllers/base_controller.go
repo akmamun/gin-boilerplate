@@ -4,7 +4,7 @@ import (
 	"github.com/beego/beego/v2/client/orm"
 )
 
-type Controller struct {
+type BaseController struct {
 	//rep repository.Repository
 	DB orm.Ormer
 }

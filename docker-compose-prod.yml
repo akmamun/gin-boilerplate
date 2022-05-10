@@ -23,4 +23,3 @@ services:
       - postgres_db:postgres_db
     restart: on-failure
 
-

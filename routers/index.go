@@ -15,5 +15,5 @@ func RegisterRoutes(route *gin.Engine, db orm.Ormer) {
 	route.GET("/health", func(ctx *gin.Context) { ctx.JSON(http.StatusOK, gin.H{"live": "ok"}) })
 
 	//Add All route
-	TestRoutes(route, db)
+	//TestRoutes(route, db)
 }

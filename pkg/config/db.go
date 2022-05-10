@@ -6,7 +6,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-
 type DatabaseConfiguration struct {
 	Driver   string
 	Dbname   string
@@ -18,18 +17,19 @@ type DatabaseConfiguration struct {
 }
 
 func DbConfiguration() string {
-	dbname := viper.GetString("database.dbname")
-	username := viper.GetString("database.username")
-	password := viper.GetString("database.password")
-	host := viper.GetString("database.host")
-	port := viper.GetString("database.port")
-	sslMode := viper.GetString("database.sslmode")
-	
-	dsn := fmt.Sprintf(
+	masterDBName := viper.GetString("MASTER_DB_NAME")
+	masterDBUser := viper.GetString("MASTER_DB_USER")
+	masterDBPassword := viper.GetString("MASTER_DB_PASSWORD")
+	masterDBHost := viper.GetString("MASTER_DB_HOST")
+	masterDBPort := viper.GetString("MASTER_DB_PORT")
+	masterDBSslMode := viper.GetString("MASTER_SSL_MODE")
+
+	masterDBDSN := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
-		host, username, password, dbname, port, sslMode,
+		masterDBHost, masterDBUser, masterDBPassword, masterDBName, masterDBPort, masterDBSslMode,
 	)
 	fmt.Println("##################### Db Credentials #################################")
-	fmt.Println(dsn)
-	return dsn
+	fmt.Println(masterDBDSN)
+
+	return masterDBDSN
 }

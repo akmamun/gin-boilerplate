@@ -2,12 +2,9 @@ package logger
 
 import (
 	"bytes"
-
-	"runtime"
+	"github.com/sirupsen/logrus"
 	"strings"
 	"time"
-
-	"github.com/sirupsen/logrus"
 )
 
 var logger = logrus.New()
@@ -74,18 +71,12 @@ type formatter struct {
 func (f *formatter) Format(entry *logrus.Entry) ([]byte, error) {
 	var sb bytes.Buffer
 
-	var newLine = "\n"
-	if runtime.GOOS == "windows" {
-		newLine = "\r\n"
-	}
-
 	sb.WriteString(strings.ToUpper(entry.Level.String()))
 	sb.WriteString(" ")
 	sb.WriteString(entry.Time.Format(time.RFC3339))
 	sb.WriteString(" ")
 	sb.WriteString(f.prefix)
 	sb.WriteString(entry.Message)
-	sb.WriteString(newLine)
 
 	return sb.Bytes(), nil
 }
