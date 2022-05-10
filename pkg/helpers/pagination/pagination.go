@@ -1,13 +1,12 @@
 package pagination
 
 import (
+	"gorm.io/gorm"
 	"math"
-
-	"github.com/beego/beego/v2/client/orm"
 )
 
 type Param struct {
-	DB      orm.Ormer
+	DB      *gorm.DB
 	Page    int64
 	Limit   int64
 	OrderBy string
@@ -46,10 +45,10 @@ func Pagination(param *Param, resultData interface{}) *Result {
 	} else {
 		offset = (param.Page - 1) * param.Limit
 	}
-	// db.Offset(int(offset)).
-	// 	Limit(int(param.Limit)).
-	// 	Order(param.OrderBy).
-	// 	Find(resultData)
+	db.Offset(int(offset)).
+		Limit(int(param.Limit)).
+		Order(param.OrderBy).
+		Find(resultData)
 
 	<-done
 
@@ -76,7 +75,7 @@ func Pagination(param *Param, resultData interface{}) *Result {
 }
 
 // count through separate channel
-func countResults(db orm.Ormer, anyType interface{}, done chan bool, count *int64) {
-	// db.Model(anyType).Count(count)
+func countResults(db *gorm.DB, anyType interface{}, done chan bool, count *int64) {
+	db.Model(anyType).Count(count)
 	done <- true
 }

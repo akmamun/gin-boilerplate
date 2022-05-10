@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"github.com/beego/beego/v2/client/orm"
+	"gorm.io/gorm"
 )
 
 type BaseController struct {
 	//rep repository.Repository
-	DB orm.Ormer
+	DB *gorm.DB
 }
