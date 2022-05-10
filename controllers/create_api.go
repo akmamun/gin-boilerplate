@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (base *Controller) CreateExample(ctx *gin.Context) {
+func (base *BaseController) CreateExample(ctx *gin.Context) {
 	example := new(models.Example)
 
 	err := ctx.ShouldBindJSON(&example)
@@ -17,7 +17,7 @@ func (base *Controller) CreateExample(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	_,err = base.DB.Insert(&example)
+	_, err = base.DB.Insert(&example)
 	if err != nil {
 		logger.Errorf("error: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

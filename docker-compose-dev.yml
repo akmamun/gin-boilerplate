@@ -5,13 +5,10 @@ services:
     container_name: dev_pg_db
     image: postgres:13-alpine
     environment:
-      - POSTGRES_DB=test_pg_go
-      - POSTGRES_USER=mamun
-      - POSTGRES_PASSWORD=123
-    ports:
-      - "5432:5432"
+      - POSTGRES_USER=${MASTER_DB_USER}
+      - POSTGRES_PASSWORD=${MASTER_DB_PASSWORD}
+      - POSTGRES_DB=${MASTER_DB_NAME}
     restart: always
-
 
   server:
     container_name: dev_go_server
@@ -27,6 +24,3 @@ services:
     volumes:
       - .:/app
     restart: on-failure
-
-
-

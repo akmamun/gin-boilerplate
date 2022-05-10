@@ -11,7 +11,7 @@ type Example struct {
 	UpdatedAt *time.Time `json:"updated_at_at,string,omitempty"`
 }
 
-// Database TableName of this model
+// TableName is Database TableName of this model
 func (e *Example) TableName() string {
 	return "examples"
 }
