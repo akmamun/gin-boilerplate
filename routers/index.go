@@ -1,14 +1,13 @@
 package routers
 
 import (
-	"net/http"
-
-	"github.com/beego/beego/v2/client/orm"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+	"net/http"
 )
 
 //RegisterRoutes add all routing list here automatically get main router
-func RegisterRoutes(route *gin.Engine, db orm.Ormer) {
+func RegisterRoutes(route *gin.Engine, db *gorm.DB) {
 	route.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Route Not Found"})
 	})
