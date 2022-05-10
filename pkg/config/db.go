@@ -2,8 +2,10 @@ package config
 
 import (
 	"fmt"
+
 	"github.com/spf13/viper"
 )
+
 
 type DatabaseConfiguration struct {
 	Driver   string
@@ -22,10 +24,12 @@ func DbConfiguration() string {
 	host := viper.GetString("database.host")
 	port := viper.GetString("database.port")
 	sslMode := viper.GetString("database.sslmode")
-
+	
 	dsn := fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
 		host, username, password, dbname, port, sslMode,
 	)
+	fmt.Println("##################### Db Credentials #################################")
+	fmt.Println(dsn)
 	return dsn
 }

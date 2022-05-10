@@ -3,9 +3,10 @@ package controllers
 import (
 	"gin-boilerplate/models"
 	"gin-boilerplate/pkg/helpers/pagination"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func (base *Controller) GetPaginatedData(ctx *gin.Context) {
