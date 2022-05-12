@@ -5,9 +5,9 @@ services:
     container_name: core_pg_db
     image: postgres:13-alpine
     environment:
-      - POSTGRES_DB=test_pg_go
-      - POSTGRES_USER=mamun
-      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=${MASTER_DB_USER}
+      - POSTGRES_PASSWORD=${MASTER_DB_PASSWORD}
+      - POSTGRES_DB=${MASTER_DB_NAME}
     restart: always
 
   server:
@@ -16,7 +16,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - ${SERVER_PORT}:${SERVER_PORT}
     depends_on:
       - postgres_db
     links:

@@ -16,7 +16,7 @@ services:
       context: .
       dockerfile: Dockerfile-dev
     ports:
-      - "8000:8000"
+      - ${SERVER_PORT}:${SERVER_PORT}
     depends_on:
       - postgres_db
     links:
