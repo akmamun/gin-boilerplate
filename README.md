@@ -61,13 +61,13 @@ REPLICA_SSL_MODE=disable
 - Use [Gin](https://github.com/gin-gonic/gin) Web Framework
 
 #### Database Configuration
-- Use [GORM](https://github.com/go-gorm/gorm) as an ORM. you just need to configure config.yml file according to your setup.
+- Use [GORM](https://github.com/go-gorm/gorm) as an ORM
 - Use database `MASTER_DB_HOST` value set as `localhost` for local development, and use `postgres_db` for docker development 
 
 ### Installation
 #### Local Setup Instruction
 Follow these steps:
-- Copy [.env.example](.env.example) as .env and configure necessary values
+- Copy [.env.example](.env.example) as `.env` and configure necessary values
 - To add all dependencies for a package in your module `go get .` in the current directory
 - Locally run `go run main.go` or `go build main.go` and run `./main`
 - Check Application health available on [0.0.0.0:8000/health](http://0.0.0.0:8000/health)
