@@ -8,6 +8,8 @@ services:
       - POSTGRES_USER=${MASTER_DB_USER}
       - POSTGRES_PASSWORD=${MASTER_DB_PASSWORD}
       - POSTGRES_DB=${MASTER_DB_NAME}
+    volumes:
+      - prod_postgres_data:/var/lib/postgresql/data/
     restart: always
 
   server:
@@ -23,3 +25,5 @@ services:
       - postgres_db:postgres_db
     restart: on-failure
 
+volumes:
+  prod_postgres_data:
