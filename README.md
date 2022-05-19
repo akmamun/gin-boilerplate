@@ -67,6 +67,8 @@ REPLICA_SSL_MODE=disable
 #### PG Admin
 - Check  PG Admin on [http://0.0.0.0:5050/browser/](http://0.0.0.0:5050/browser/)
 - Login with Credential Email `admin@admin.com` Password `root`
+- Connect Database Host as `postgres_db`, DB Username and Password as per `.env` set
+- Note: if not configure `.env`, default Username `mamun` and password `123`
 
 ### Installation
 #### Local Setup Instruction
