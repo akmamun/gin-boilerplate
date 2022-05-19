@@ -7,6 +7,7 @@ An API boilerplate written in Golang with Gin Framework and Gorm
   - [ENV Manage](#env-manage)
   - [Server Configuration](#server-configuration)
   - [Database Configuration](#database-configuration)
+  - [PgAdmin](#pg-admin)
 - [Installation](#installation)
   - [Local Setup Instruction](#local-setup-instruction)
   - [Develop Application in Docker with Live Reload](#develop-application-in-docker-with-live-reload)
@@ -63,6 +64,9 @@ REPLICA_SSL_MODE=disable
 #### Database Configuration
 - Use [GORM](https://github.com/go-gorm/gorm) as an ORM
 - Use database `MASTER_DB_HOST` value set as `localhost` for local development, and use `postgres_db` for docker development 
+#### PG Admin
+- Check  PG Admin on [http://0.0.0.0:5050/browser/](http://0.0.0.0:5050/browser/)
+- Login with Credential Email `admin@admin.com` Password `root`
 
 ### Installation
 #### Local Setup Instruction
