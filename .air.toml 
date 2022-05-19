@@ -17,11 +17,11 @@ full_bin = "./tmp/app/engine http"
 # This log file places in your tmp_dir.
 log = "air_errors.log"
 # Watch these filename extensions.
-include_ext = ["go", "yaml"]
+include_ext = ["go", "yaml",".env"]
 # Ignore these filename extensions or directories.
 exclude_dir = ["tmp"]
 # It's not necessary to trigger build each time file changes if it's too frequent.
-delay = 1000 # ms
+delay = 500 # ms
 
 [log]
 # Show log time
