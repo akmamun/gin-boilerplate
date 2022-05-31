@@ -1,12 +1,12 @@
 package pagination
 
 import (
+	"gin-boilerplate/pkg/database"
 	"gorm.io/gorm"
 	"math"
 )
 
 type Param struct {
-	DB      *gorm.DB
 	Page    int64
 	Limit   int64
 	OrderBy string
@@ -24,8 +24,8 @@ type Result struct {
 	Data        interface{} `json:"data"`
 }
 
-func Pagination(param *Param, resultData interface{}) *Result {
-	db := param.DB
+func Paginate(param *Param, resultData interface{}) *Result {
+	db := database.GetDB()
 
 	if param.Page < 1 {
 		param.Page = 1
