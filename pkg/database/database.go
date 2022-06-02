@@ -20,8 +20,8 @@ type Database struct {
 	*gorm.DB
 }
 
-// Connection create database connection
-func Connection() error {
+// SetupConnection create database connection
+func SetupConnection() error {
 	var db = DB
 	masterDSN, replicaDSN := config.DbConfiguration()
 

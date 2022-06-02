@@ -4,10 +4,9 @@ import (
 	"gin-boilerplate/routers/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
-	"gorm.io/gorm"
 )
 
-func Routes(db *gorm.DB) *gin.Engine {
+func SetupRoute() *gin.Engine {
 
 	environment := viper.GetBool("DEBUG")
 	if environment {
@@ -23,7 +22,7 @@ func Routes(db *gorm.DB) *gin.Engine {
 	router.Use(gin.Recovery())
 	router.Use(middleware.CORSMiddleware())
 
-	RegisterRoutes(router, db) //routes register
+	RegisterRoutes(router) //routes register
 
 	return router
 }

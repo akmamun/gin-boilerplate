@@ -12,12 +12,11 @@ func main() {
 		logger.Fatalf("config SetupConfig() error: %s", err)
 	}
 
-	if err := database.Connection(); err != nil {
+	if err := database.SetupConnection(); err != nil {
 		logger.Fatalf("database DbConnection error: %s", err)
 	}
 
-	db := database.GetDB()
-	router := routers.Routes(db)
+	router := routers.SetupRoute()
 
 	logger.Fatalf("%v", router.Run(config.ServerConfig()))
 

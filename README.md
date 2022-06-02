@@ -211,8 +211,8 @@ import (
 )
 
 
-func TestRoutes(route *gin.Engine, db *gorm.DB) {
-	ctrl := controllers.Controller{DB: db}
+func TestRoutes(route *gin.Engine) {
+	ctrl := controllers.Controller{DB: database.GetDB()}
 	v1 := route.Group("/v1")
 	v1.POST("/example/", ctrl.CreateExample)
 }
@@ -228,9 +228,9 @@ import (
 )
 
 //RegisterRoutes add all routing list here automatically get main router
-func RegisterRoutes(route *gin.Engine, db *gorm.DB) {
+func RegisterRoutes(route *gin.Engine) {
 	//Add All route
-	TestRoutes(route, db)
+	TestRoutes(route)
 }
 ```
 - Congratulation, your new endpoint `0.0.0.0:8000/v1/example/`
