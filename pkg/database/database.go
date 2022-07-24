@@ -11,17 +11,12 @@ import (
 )
 
 var (
-	DB    *gorm.DB
-	err   error
-	DBErr error
+	DB  *gorm.DB
+	err error
 )
 
-type Database struct {
-	*gorm.DB
-}
-
-// SetupConnection create database connection
-func SetupConnection() error {
+// DbConnection create database connection
+func DbConnection() error {
 	var db = DB
 	masterDSN, replicaDSN := config.DbConfiguration()
 
@@ -44,29 +39,15 @@ func SetupConnection() error {
 			Policy: dbresolver.RandomPolicy{},
 		}))
 	}
-
 	if err != nil {
-		DBErr = err
-		log.Println("Db connection error")
-		return err
-	}
-
-	err = db.AutoMigrate(migrationModels...)
-
-	if err != nil {
+		log.Fatalf("Db connection error")
 		return err
 	}
 	DB = db
-
 	return nil
 }
 
 // GetDB connection
 func GetDB() *gorm.DB {
 	return DB
-}
-
-// GetDBError connection error
-func GetDBError() error {
-	return DBErr
 }

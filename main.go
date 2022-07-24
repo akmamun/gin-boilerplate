@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gin-boilerplate/migrations"
 	"gin-boilerplate/pkg/config"
 	"gin-boilerplate/pkg/database"
 	"gin-boilerplate/pkg/logger"
@@ -20,10 +21,11 @@ func main() {
 		logger.Fatalf("config SetupConfig() error: %s", err)
 	}
 
-	if err := database.SetupConnection(); err != nil {
+	if err := database.DbConnection(); err != nil {
 		logger.Fatalf("database DbConnection error: %s", err)
 	}
-
+	//TODO changes in later
+	migrations.Migrate()
 	router := routers.SetupRoute()
 
 	logger.Fatalf("%v", router.Run(config.ServerConfig()))
