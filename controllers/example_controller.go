@@ -2,9 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"gin-boilerplate/models"
-	"gin-boilerplate/pkg/helpers"
-	"encoding/json"
+	"gin-boilerplate/models" 
 	"net/http"
 )
 
