@@ -6,10 +6,11 @@ type Response struct {
 	Data    interface{} `json:"data"`
 }
 
-//func SuccessfullyGet(data interface{}) interface{} {
-//	response := make(map[string]interface{})
-//	response["success"] = true
-//	response["message"] = "successfully return"
-//	response["data"] = data
-//	return response
-//}
+func SuccessResponse(w http.ResponseWriter, data interface{}) interface{} {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	return json.NewEncoder(w).Encode(map[string]interface{}{
+		"message": "success",
+		"data":    &data,
+	})
+}
