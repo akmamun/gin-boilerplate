@@ -1,7 +1,6 @@
 package database
 
 import (
-	"gin-boilerplate/pkg/config"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -16,9 +15,8 @@ var (
 )
 
 // DbConnection create database connection
-func DbConnection() error {
+func DbConnection(masterDSN, replicaDSN string) error {
 	var db = DB
-	masterDSN, replicaDSN := config.DbConfiguration()
 
 	logMode := viper.GetBool("DB_LOG_MODE")
 	debug := viper.GetBool("DEBUG")

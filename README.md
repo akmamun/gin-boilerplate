@@ -1,5 +1,7 @@
 # Go Boilerplate
 An API boilerplate written in Golang with Gin Framework and Gorm
+### Motivation
+Write restful API with fast development and developer friendly
 
 ## Table of Contents
 - [Motivation](#motivation)
@@ -21,9 +23,6 @@ An API boilerplate written in Golang with Gin Framework and Gorm
 - [Useful Commands](#useful-commands)
 - [ENV YAML Configure](#env-yaml-configure)
 - [Use Packages](#use-packages)
-
-### Motivation
-Write restful API with fast development and developer friendly
 
 ### Configuration Manage
 #### ENV Manage
@@ -56,7 +55,7 @@ REPLICA_SSL_MODE=disable
 ```
 - Server `DEBUG` set `False` in Production
 - Database Logger `MASTER_DB_LOG_MODE` and `REPLICA_DB_LOG_MODE`  set `False` in production
-- If ENV Manage from YAML file add a config.yml file and configuration [db.go](pkg/config/db.go) and [server.go](pkg/config/server.go). See More [ENV YAML Configure](#env-yaml-configure)
+- If ENV Manage from YAML file add a config.yml file and configuration [db.go](config/db.go) and [server.go](config/server.go). See More [ENV YAML Configure](#env-yaml-configure)
 
 #### Server Configuration
 - Use [Gin](https://github.com/gin-gonic/gin) Web Framework
@@ -176,28 +175,22 @@ var migrationModels = []interface{}{&models.Example{}}
 package controllers
 
 import (
-	"gin-boilerplate/models"
-	"gin-boilerplate/pkg/logger"
-	"github.com/gin-gonic/gin"
-	"net/http"
+  "gin-boilerplate/models"
+  "gin-boilerplate/repository"
+  "github.com/gin-gonic/gin"
+  "net/http"
 )
 
-func (base *Controller) CreateExample(ctx *gin.Context) {
-	example := new(models.Example)
+func GetData(ctx *gin.Context) {
+  var example []*models.Example
+  repository.Get(&example)
+  ctx.JSON(http.StatusOK, &example)
 
-	err := ctx.ShouldBindJSON(&example)
-	if err != nil {
-		logger.Errorf("error: %v", err)
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	err = base.DB.Create(&example).Error
-	if err != nil {
-		logger.Errorf("error: %v", err)
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	ctx.JSON(http.StatusOK, &example)
+}
+func Create(ctx *gin.Context) {
+  example := new(models.Example)
+  repository.Save(&example)
+  ctx.JSON(http.StatusOK, &example)
 }
 ```
 4. [routers](routers) folder add a file `example.go`
@@ -205,32 +198,19 @@ func (base *Controller) CreateExample(ctx *gin.Context) {
 package routers
 
 import (
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
-	"gin-boilerplate/controllers"
+  "gin-boilerplate/controllers"
+  "github.com/gin-gonic/gin"
+  "net/http"
 )
 
-
-func TestRoutes(route *gin.Engine) {
-	ctrl := controllers.Controller{DB: database.GetDB()}
-	v1 := route.Group("/v1")
-	v1.POST("/example/", ctrl.CreateExample)
-}
-```
-5. Finally, register routes to [index.go](routers/index.go)
-```go
-package routers
-
-import (
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
-	"net/http"
-)
-
-//RegisterRoutes add all routing list here automatically get main router
 func RegisterRoutes(route *gin.Engine) {
-	//Add All route
-	TestRoutes(route)
+  route.GET("/health", func(ctx *gin.Context) { ctx.JSON(http.StatusOK, gin.H{"live": "ok"}) })
+  //added new
+  route.GET("/v1/example/", controllers.GetData)
+  route.POST("/v1/example/", controllers.Create)
+
+  //Add All route
+  //TestRoutes(route)
 }
 ```
 - Congratulation, your new endpoint `0.0.0.0:8000/v1/example/`
@@ -263,7 +243,7 @@ server:
   request:
     timeout: 100
 ```
-- [Server Config](pkg/config/server.go)
+- [Server Config](config/server.go)
 ```go
 func ServerConfig() string {
 viper.SetDefault("server.host", "0.0.0.0")
@@ -272,7 +252,7 @@ appServer := fmt.Sprintf("%s:%s", viper.GetString("server.host"), viper.GetStrin
 return appServer
 }
 ```
-- [DB Config](pkg/config/db.go)
+- [DB Config](config/db.go)
 ```go
 func DbConfiguration() string {
 	
