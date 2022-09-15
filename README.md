@@ -95,11 +95,11 @@ router.Use(middleware.CORSMiddleware())
 ```
 
 ### Boilerplate Structure
-├── config
+<pre>├── <font color="#3465A4"><b>config</b></font>
 │   ├── config.go
 │   ├── db.go
 │   └── server.go
-├── controllers
+├── <font color="#3465A4"><b>controllers</b></font>
 │   └── example_controller.go
 ├── docker-compose-dev.yml
 ├── docker-compose-prod.yml
@@ -107,29 +107,30 @@ router.Use(middleware.CORSMiddleware())
 ├── Dockerfile-dev
 ├── go.mod
 ├── go.sum
-├── helpers
+├── <font color="#3465A4"><b>helpers</b></font>
 │   ├── response.go
 │   └── search.go
-├── infra
-│   ├── database
+├── <font color="#3465A4"><b>infra</b></font>
+│   ├── <font color="#3465A4"><b>database</b></font>
 │   │   └── database.go
-│   └── logger
+│   └── <font color="#3465A4"><b>logger</b></font>
 │       └── logger.go
 ├── LICENSE
 ├── main.go
 ├── Makefile
-├── migrations
+├── <font color="#3465A4"><b>migrations</b></font>
 │   └── migration.go
-├── models
+├── <font color="#3465A4"><b>models</b></font>
 │   └── example_model.go
 ├── README.md
-├── repository
+├── <font color="#3465A4"><b>repository</b></font>
 │   └── sql_repo.go
-├── routers
+├── <font color="#3465A4"><b>routers</b></font>
 │   ├── index.go
-│   ├── middleware
+│   ├── <font color="#3465A4"><b>middleware</b></font>
 │   │   └── cors.go
 │   └── router.go
+</pre>
 
 ### Examples
 - More Example [gin-boilerplate-examples](https://github.com/akmamun/gin-boilerplate-examples)
