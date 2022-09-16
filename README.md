@@ -1,5 +1,5 @@
 # Go Boilerplate
-An API boilerplate written in Golang with Gin Framework and Gorm
+An API boilerplate written in Golang with Gin Framework and Gorm 
 ### Motivation
 Write restful API with fast development and developer friendly
 
@@ -159,18 +159,26 @@ func (e *Example) TableName() string {
 ```
 2. Add Model to [migration](pkg/database/migration.go)
 ```go
-package database
+package migrations
 
 import (
+	"gin-boilerplate/infra/database"
 	"gin-boilerplate/models"
 )
-//Add list of model add for migrations
-var migrationModels = []interface{}{&models.Example{}}
+
+// Migrate Add list of model add for migrations
+func Migrate() {
+	var migrationModels = []interface{}{&models.Example{}}
+	err := database.DB.AutoMigrate(migrationModels...)
+	if err != nil {
+		return
+	}
+}
+
 ```
 3. [controller](controllers) folder add a file `example_controller.go`
 - Create API Endpoint 
-- Use any syntax of GORM after `base.DB`, this is wrapper of `*gorm.DB`
-
+- Write Database Operation in Repository and use them from controller
 ```go
 package controllers
 
