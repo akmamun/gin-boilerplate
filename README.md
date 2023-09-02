@@ -1,5 +1,12 @@
 # Go Boilerplate
 An API boilerplate written in Golang with Gin Framework and Gorm 
+
+<div style="display: flex; justify-content: center;">
+    <a href="https://www.buymeacoffee.com/akmamun" target="_blank">
+        <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 46px !important;width: 179px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;">
+    </a>
+</div>
+
 ### Motivation
 Write restful API with fast development and developer friendly
 
