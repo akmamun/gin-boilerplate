@@ -4,6 +4,8 @@ services:
   postgres_db:
     container_name: dev_pg_db
     image: postgres:13-alpine
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=${MASTER_DB_USER}
       - POSTGRES_PASSWORD=${MASTER_DB_PASSWORD}
